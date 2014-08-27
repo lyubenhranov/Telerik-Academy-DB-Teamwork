@@ -10,7 +10,6 @@
 [Dd]ebug/
 [Dd]ebugPublic/
 [Rr]elease/
-x64/
 build/
 bld/
 [Bb]in/
@@ -27,7 +26,6 @@ TestResult.xml
 # Build Results of an ATL Project
 [Dd]ebugPS/
 [Rr]eleasePS/
-dlldata.c
 
 *_i.c
 *_p.c
@@ -123,7 +121,7 @@ publish/
 *.azurePubxml
 
 # NuGet Packages Directory
-packages/
+# packages/
 ## TODO: If the tool you use requires repositories.config uncomment the next line
 #!packages/repositories.config
 
@@ -139,7 +137,7 @@ csx/
 AppPackages/
 
 # Others
-sql/
+# sql/
 *.Cache
 ClientBin/
 [Ss]tyle[Cc]op.*
@@ -162,8 +160,8 @@ UpgradeLog*.XML
 UpgradeLog*.htm
 
 # SQL Server files
-*.mdf
-*.ldf
+# *.mdf
+# *.ldf
 
 # Business Intelligence projects
 *.rdl.data
