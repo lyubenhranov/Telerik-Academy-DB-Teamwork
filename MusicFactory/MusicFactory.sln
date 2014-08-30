@@ -5,7 +5,7 @@ VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicFactory.Client.Console", "MusicFactory.Client.Console\MusicFactory.Client.Console.csproj", "{35C6C070-EED4-40E2-910A-ADED3016BD28}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicFactory.DataModels", "MusicFactory.DataModels\MusicFactory.DataModels.csproj", "{1090FD58-E599-42D8-BBBA-049CD52F2FA2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicFactory.DataModels.Old", "MusicFactory.DataModels\MusicFactory.DataModels.Old.csproj", "{1090FD58-E599-42D8-BBBA-049CD52F2FA2}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{90C640DC-68C2-49BC-ADB1-DFF73E20A9ED}"
 	ProjectSection(SolutionItems) = preProject
@@ -13,6 +13,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{90C640
 		.nuget\NuGet.exe = .nuget\NuGet.exe
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicFactory.Models", "MusicFactory.Models\MusicFactory.Models.csproj", "{804CA510-E3D0-4E23-8997-0E91934D736C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -28,6 +30,10 @@ Global
 		{1090FD58-E599-42D8-BBBA-049CD52F2FA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1090FD58-E599-42D8-BBBA-049CD52F2FA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1090FD58-E599-42D8-BBBA-049CD52F2FA2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{804CA510-E3D0-4E23-8997-0E91934D736C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{804CA510-E3D0-4E23-8997-0E91934D736C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{804CA510-E3D0-4E23-8997-0E91934D736C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{804CA510-E3D0-4E23-8997-0E91934D736C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
