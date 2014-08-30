@@ -10,6 +10,10 @@
             var pdfReporter = new PdfReporter();
 
             pdfReporter.GenerateReport();
+
+            var xmlReporter = new XmlReporter();
+
+            xmlReporter.GenerateReport();
         }
     }
 }

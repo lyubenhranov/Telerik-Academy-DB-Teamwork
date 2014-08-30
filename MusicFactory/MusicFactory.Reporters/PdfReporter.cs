@@ -4,6 +4,8 @@
     using iTextSharp.text;
     using iTextSharp.text.pdf;
     using System;
+    using System.Data.Common;
+    using System.Data.SqlClient;
     using System.IO;
 
     public class PdfReporter : IReporter
@@ -12,7 +14,7 @@
         {
             using (Document doc = new Document())
             {
-                PdfWriter writer = PdfWriter.GetInstance(doc, new FileStream("report.pdf", FileMode.Create));
+                PdfWriter writer = PdfWriter.GetInstance(doc, new FileStream(@"..\..\..\Reports\report.pdf", FileMode.Create));
 
                 doc.Open();
 
@@ -46,12 +48,14 @@
                 doc.Add(p);
 
                 doc.Add(GenerateTableFromData());
+
+                Console.WriteLine("PDF report has been successfully generated");
             }
         }
 
         private IElement GenerateTableFromData()
         {
-            string[] col = {"No", "Name", "City"};
+            string[] col = {"ID", "Name", "Title"};
             PdfPTable table = new PdfPTable(3);
 
             table.WidthPercentage = 100;
@@ -67,11 +71,25 @@
                 table.AddCell(cell);
             }
 
-            for (int i = 0; i < 2; i++)
+            string connectionString = "Server=LYUBENPC; " +
+            "Database=Northwind; Integrated Security=true";
+
+            SqlConnection dbConnection = new SqlConnection(connectionString);
+
+            dbConnection.Open();
+
+            using (dbConnection)
             {
-                table.AddCell("Number" + i);
-                table.AddCell("Name" + i);
-                table.AddCell("City" + i);
+                SqlCommand employeesCommand = new SqlCommand("SELECT TOP 10 EmployeeId AS ID, FirstName + ' ' + LastName AS [Full Name], Title FROM Employees", dbConnection);
+
+                SqlDataReader employeesReader = employeesCommand.ExecuteReader();
+
+                while (employeesReader.Read())
+                {
+                    table.AddCell(((int)employeesReader["ID"]).ToString());
+                    table.AddCell((string)employeesReader["Full Name"]);
+                    table.AddCell((string)employeesReader["Title"]);
+                }
             }
 
             return table;
