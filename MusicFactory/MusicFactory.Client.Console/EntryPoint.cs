@@ -1,15 +1,15 @@
 ﻿namespace MusicFactory.Engine
 {
     using MusicFactory.Models;
+    using MusicFactory.Reporters;
 
     class EntryPoint
     {
         static void Main()
         {
-            var dbContext = new MusicFactoryDbContext();
+            var pdfReporter = new PdfReporter();
 
-            dbContext.Artists.Add(new Artist() { Name = "Pepi" });
-            dbContext.SaveChanges();
+            pdfReporter.GenerateReport();
         }
     }
 }
