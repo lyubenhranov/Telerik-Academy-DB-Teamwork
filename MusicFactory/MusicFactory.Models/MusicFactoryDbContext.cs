@@ -29,11 +29,11 @@ namespace MusicFactory.Models
                 .Property(e => e.Price)
                 .HasPrecision(19, 4);
 
-            modelBuilder.Entity<Album>()
-                .HasMany(e => e.Songs)
-                .WithRequired(e => e.Album)
-                .HasForeignKey(e => e.ArtistID)
-                .WillCascadeOnDelete(false);
+            //modelBuilder.Entity<Album>()
+            //    .HasMany(e => e.Songs)
+            //    .WithRequired(e => e.Album)
+            //    .HasForeignKey(e => e.ArtistID)
+            //    .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Album>()
                 .HasMany(e => e.Genres)
@@ -49,10 +49,11 @@ namespace MusicFactory.Models
                 .WithRequired(e => e.Artist)
                 .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<Artist>()
-                .HasMany(e => e.Songs)
-                .WithRequired(e => e.Artist)
-                .WillCascadeOnDelete(false);
+            //modelBuilder.Entity<Artist>()
+            //    .HasMany(e => e.Songs)
+            //    .WithRequired(e => e.Artist)
+            //    .WillCascadeOnDelete(false);
+
 
             modelBuilder.Entity<Artist>()
                 .HasMany(e => e.Genres)

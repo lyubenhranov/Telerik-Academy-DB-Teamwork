@@ -18,6 +18,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicFactory.Client.SavesAs
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicFactory.Reporters", "MusicFactory.Reporters\MusicFactory.Reporters.csproj", "{78314E0F-45D1-4E95-9483-7DED4D55682E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicFactory.Data", "MusicFactory.Data\MusicFactory.Data.csproj", "{5143F7BE-51FB-426D-B351-E377E5FEB7CB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -40,6 +42,10 @@ Global
 		{78314E0F-45D1-4E95-9483-7DED4D55682E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{78314E0F-45D1-4E95-9483-7DED4D55682E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{78314E0F-45D1-4E95-9483-7DED4D55682E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5143F7BE-51FB-426D-B351-E377E5FEB7CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5143F7BE-51FB-426D-B351-E377E5FEB7CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5143F7BE-51FB-426D-B351-E377E5FEB7CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5143F7BE-51FB-426D-B351-E377E5FEB7CB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -10,11 +10,12 @@ namespace MusicFactory.Models
     {
         public Lable()
         {
+            this.LabelID = Guid.NewGuid();
             Artists = new HashSet<Artist>();
         }
 
         [Key]
-        public int LabelID { get; set; }
+        public Guid LabelID { get; set; }
 
         [StringLength(100)]
         public string LegalName { get; set; }

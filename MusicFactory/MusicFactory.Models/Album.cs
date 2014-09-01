@@ -1,5 +1,6 @@
 namespace MusicFactory.Models
 {
+    using MongoDB.Bson.Serialization.Attributes;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
@@ -10,16 +11,18 @@ namespace MusicFactory.Models
     {
         public Album()
         {
+            this.AlbumID = Guid.NewGuid();
             Songs = new HashSet<Song>();
             Genres = new HashSet<Genre>();
         }
 
-        public int AlbumID { get; set; }
+        
+        public Guid AlbumID { get; set; }
 
         [StringLength(100)]
         public string Title { get; set; }
 
-        public int ArtistID { get; set; }
+        public Guid ArtistID { get; set; }
 
         [Column(TypeName = "smalldatetime")]
         public DateTime? ReleaseDate { get; set; }
@@ -27,7 +30,7 @@ namespace MusicFactory.Models
         [Column(TypeName = "money")]
         public decimal? Price { get; set; }
 
-        public int? LabelID { get; set; }
+        public Guid? LabelID { get; set; }
 
         public virtual Artist Artist { get; set; }
 
