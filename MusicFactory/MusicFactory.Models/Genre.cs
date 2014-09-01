@@ -11,8 +11,7 @@ namespace MusicFactory.Models
         public Genre()
         {
             this.GenreID = Guid.NewGuid();
-            Albums = new HashSet<Album>();
-            Artists = new HashSet<Artist>();
+            this.Songs = new HashSet<Song>();
         }
 
         public Guid GenreID { get; set; }
@@ -20,8 +19,6 @@ namespace MusicFactory.Models
         [StringLength(100)]
         public string Name { get; set; }
 
-        public virtual ICollection<Album> Albums { get; set; }
-
-        public virtual ICollection<Artist> Artists { get; set; }
+        public ICollection<Song> Songs { get; set; }
     }
 }

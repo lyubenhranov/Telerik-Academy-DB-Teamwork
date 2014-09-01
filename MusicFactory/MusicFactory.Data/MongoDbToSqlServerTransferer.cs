@@ -24,41 +24,53 @@
             this.SqlServerContext = sqlServerContext;
         }
        
-        private Album NormalizeMongoDbRecord(AlbumMongoDbProjection album)
+        /// <summary>
+        /// Parses the album projection from the MongoDb database to valid Sql Server objects
+        /// </summary>
+        /// <param name="albumProjection">MongoDB album projection entry</param>
+        /// <returns>The parsed album with all the needed references</returns>
+        private Album ParseMongoDbRecord(AlbumMongoDbProjection albumProjection)
         {
-            var label = new Lable() { LegalName = album.ArtistLabel };
-            var songs = album.Songs;
-            var artist = new Artist() { Name = album.ArtistName, Lable = label };
+            var label = new Lable() { LegalName = albumProjection.ArtistLabel };
+            var songs = albumProjection.Songs;
+            var artist = new Artist() { Name = albumProjection.ArtistName, Lable = label };
             var songsToDb = new List<Song>();
             foreach (var song in songs)
             {
-                songsToDb.Add(new Song { Title = song.Title, Duration = song.Duration });
+                songsToDb.Add(new Song { Title = song.Title, Duration = song.Duration, Genre = new Genre() { Name = song.GenreName } });
             }
+
             artist.Songs = songsToDb;
             
-            var normalizedAlbum = new Album() { Title = album.AlbumTitle, Price = album.AlbumPrice, ReleaseDate = album.ReleaseDate, Songs = songsToDb, Artist = artist };
+            var parsedAlbum = new Album() { Title = albumProjection.AlbumTitle, Price = albumProjection.AlbumPrice, ReleaseDate = albumProjection.ReleaseDate, Songs = songsToDb, Artist = artist, Label = label };
 
             foreach (var song in songsToDb)
             {
-                song.Album = normalizedAlbum;
-            }
-            artist.Albums.Add(normalizedAlbum);
-
-            if (album.LabelId != default(Guid))
-            {
-                label.LabelID = album.LabelId;
-            }
-            if (album.ArtistId != default(Guid))
-            {
-                artist.ArtistID = album.ArtistId;
+                song.Album = parsedAlbum;
             }
 
-            return normalizedAlbum;
+            artist.Albums.Add(parsedAlbum);
+
+            if (albumProjection.LabelId != default(Guid))
+            {
+                label.LabelID = albumProjection.LabelId;
+            }
+
+            if (albumProjection.ArtistId != default(Guid))
+            {
+                artist.ArtistID = albumProjection.ArtistId;
+            }
+
+            return parsedAlbum;
         }
 
-        public Album ValidateAlbumInfo(Album album)
+        /// <summary>
+        /// Checks if any of the objects parsed from the MongoDb database already exists in the SQL Server database.
+        /// </summary>
+        private Album ValidateAlbumInfo(Album album)
         {
             var artistInDb = this.SqlServerContext.Artists.FirstOrDefault(a => a.Name == album.Artist.Name);
+            var label = this.SqlServerContext.Lables.FirstOrDefault(l => l.LegalName == album.Label.LegalName);
 
             if (artistInDb != null)
             {
@@ -68,30 +80,41 @@
                     song.Artist = artistInDb;
                 }
             }
-           
-            //var labelInDb = this.SqlServerContext.Lables.FirstOrDefault(l => l.LegalName == album);
-            //if (labelInDb != null)
-            //{
-            //    album.LabelID = labelInDb.LabelID;
-            //}
+            if (label != null)
+            {
+                album.Label = label;
+                album.Artist.Lable = label;
+            }
+            foreach (var song in album.Songs)
+            {
+                var genreInDb = this.SqlServerContext.Genres.FirstOrDefault(g => g.Name == song.Genre.Name);
 
+                if (genreInDb != null)
+                {
+                    song.Genre = genreInDb;
+                }
+            }
+            
             return album;
         }
 
         public void TransferSingleRecord()
         {
-            var album = this.MongoDbPersister.GetSingleAlbum();
-            var normalizedAlbum = this.NormalizeMongoDbRecord(album);
+            var mongoDbAlbum = this.MongoDbPersister.GetSingleAlbum();
+            var parsedAlbum = this.ParseMongoDbRecord(mongoDbAlbum);
+            parsedAlbum = this.ValidateAlbumInfo(parsedAlbum);
 
-            SqlServerContext.Albums.Add(ValidateAlbumInfo(normalizedAlbum));
+            SqlServerContext.Albums.Add(parsedAlbum);
             this.SqlServerContext.SaveChanges();
         }
 
         public void TransferAllRecords()
         {
-            var albums = this.MongoDbPersister.GetAllAlbums();
-            var normalizedAlbums = albums.Select(x => this.NormalizeMongoDbRecord(x));
-            this.SqlServerContext.Albums.AddRange(normalizedAlbums);
+            var mongoDbAlbums = this.MongoDbPersister.GetAllAlbums();
+            var parsedAlbums = mongoDbAlbums.Select(a => this.ParseMongoDbRecord(a));
+            parsedAlbums = parsedAlbums.Select(a => this.ValidateAlbumInfo(a));
+
+            this.SqlServerContext.Albums.AddRange(parsedAlbums);
             this.SqlServerContext.SaveChanges();
         }
     }

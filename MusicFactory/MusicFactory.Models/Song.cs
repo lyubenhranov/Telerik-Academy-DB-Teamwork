@@ -19,9 +19,13 @@ namespace MusicFactory.Models
 
         public int? Duration { get; set; }
 
+        public Guid? GenreID { get; set; }
+
         public virtual Album Album { get; set; }
 
         public virtual Artist Artist { get; set; }
+
+        public virtual Genre Genre { get; set; }
 
         public Song()
         {

@@ -35,10 +35,10 @@ namespace MusicFactory.Models
             //    .HasForeignKey(e => e.ArtistID)
             //    .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<Album>()
-                .HasMany(e => e.Genres)
-                .WithMany(e => e.Albums)
-                .Map(m => m.ToTable("Albums.Genres").MapLeftKey("AlbumID").MapRightKey("GenreID"));
+            //modelBuilder.Entity<Album>()
+            //    .HasMany(e => e.Genres)
+            //    .WithMany(e => e.Albums)
+            //    .Map(m => m.ToTable("Albums.Genres").MapLeftKey("AlbumID").MapRightKey("GenreID"));
 
             modelBuilder.Entity<Artist>()
                 .Property(e => e.Name)
@@ -55,10 +55,10 @@ namespace MusicFactory.Models
             //    .WillCascadeOnDelete(false);
 
 
-            modelBuilder.Entity<Artist>()
-                .HasMany(e => e.Genres)
-                .WithMany(e => e.Artists)
-                .Map(m => m.ToTable("Artists.Genres").MapLeftKey("ArtistID").MapRightKey("GenreID"));
+            //modelBuilder.Entity<Artist>()
+            //    .HasMany(e => e.Genres)
+            //    .WithMany(e => e.Artists)
+            //    .Map(m => m.ToTable("Artists.Genres").MapLeftKey("ArtistID").MapRightKey("GenreID"));
 
             modelBuilder.Entity<Genre>()
                 .Property(e => e.Name)
