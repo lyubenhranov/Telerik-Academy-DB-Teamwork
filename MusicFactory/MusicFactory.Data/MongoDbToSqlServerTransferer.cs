@@ -32,7 +32,7 @@
             var songsToDb = new List<Song>();
             foreach (var song in songs)
             {
-                songsToDb.Add(new Song { Title = song.Title});
+                songsToDb.Add(new Song { Title = song.Title, Duration = song.Duration });
             }
             artist.Songs = songsToDb;
             
@@ -44,12 +44,36 @@
             }
             artist.Albums.Add(normalizedAlbum);
 
+            if (album.LabelId != default(Guid))
+            {
+                label.LabelID = album.LabelId;
+            }
+            if (album.ArtistId != default(Guid))
+            {
+                artist.ArtistID = album.ArtistId;
+            }
+
             return normalizedAlbum;
         }
 
         public Album ValidateAlbumInfo(Album album)
         {
-            // TODO implement validation
+            var artistInDb = this.SqlServerContext.Artists.FirstOrDefault(a => a.Name == album.Artist.Name);
+
+            if (artistInDb != null)
+            {
+                album.Artist = artistInDb;
+                foreach (var song in album.Songs)
+                {
+                    song.Artist = artistInDb;
+                }
+            }
+           
+            //var labelInDb = this.SqlServerContext.Lables.FirstOrDefault(l => l.LegalName == album);
+            //if (labelInDb != null)
+            //{
+            //    album.LabelID = labelInDb.LabelID;
+            //}
 
             return album;
         }
@@ -58,7 +82,8 @@
         {
             var album = this.MongoDbPersister.GetSingleAlbum();
             var normalizedAlbum = this.NormalizeMongoDbRecord(album);
-            SqlServerContext.Albums.Add(normalizedAlbum);
+
+            SqlServerContext.Albums.Add(ValidateAlbumInfo(normalizedAlbum));
             this.SqlServerContext.SaveChanges();
         }
 

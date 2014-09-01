@@ -13,7 +13,11 @@
 
         public DateTime ReleaseDate { get; set; }
 
+        public Guid ArtistId { get; set; }
+        
         public string ArtistName { get; set; }
+
+        public Guid LabelId { get; set; }
 
         public string ArtistLabel { get; set; }
 

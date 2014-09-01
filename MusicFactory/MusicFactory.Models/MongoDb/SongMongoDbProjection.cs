@@ -11,5 +11,7 @@ namespace MusicFactory.Models.MongoDb
         public int Duration { get; set; }
 
         public string GenreName { get; set; }
+
+        
     }
 }
