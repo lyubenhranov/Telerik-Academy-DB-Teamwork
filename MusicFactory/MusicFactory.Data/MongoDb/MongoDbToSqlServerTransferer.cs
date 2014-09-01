@@ -1,13 +1,14 @@
-﻿namespace MusicFactory.Data
+﻿namespace MusicFactory.Data.MongoDb
 {
     using System.Collections.Generic;
     using System;
     using System.Linq;
+    using MusicFactory.Data.MongoDb;
     using MusicFactory.Models;
     using MusicFactory.Models.MongoDb;
     using MongoDB.Driver;
     using System.Data.Entity;
-
+    
     public class MongoDbToSqlServerTransferer
     {
         private MongoDbPersister MongoDbPersister { get; set; }
@@ -80,11 +81,13 @@
                     song.Artist = artistInDb;
                 }
             }
+
             if (label != null)
             {
                 album.Label = label;
                 album.Artist.Lable = label;
             }
+            
             foreach (var song in album.Songs)
             {
                 var genreInDb = this.SqlServerContext.Genres.FirstOrDefault(g => g.Name == song.Genre.Name);
@@ -108,14 +111,18 @@
             this.SqlServerContext.SaveChanges();
         }
 
+        //TODO Fix: mutiple queries to the sql server
         public void TransferAllRecords()
         {
             var mongoDbAlbums = this.MongoDbPersister.GetAllAlbums();
-            var parsedAlbums = mongoDbAlbums.Select(a => this.ParseMongoDbRecord(a));
-            parsedAlbums = parsedAlbums.Select(a => this.ValidateAlbumInfo(a));
+            foreach (var mongoDbAlbum in mongoDbAlbums)
+            {
+                var parsedAlbum = this.ParseMongoDbRecord(mongoDbAlbum);
+                parsedAlbum = this.ValidateAlbumInfo(parsedAlbum);
 
-            this.SqlServerContext.Albums.AddRange(parsedAlbums);
-            this.SqlServerContext.SaveChanges();
+                SqlServerContext.Albums.Add(parsedAlbum);
+                this.SqlServerContext.SaveChanges();
+            }
         }
     }
 }

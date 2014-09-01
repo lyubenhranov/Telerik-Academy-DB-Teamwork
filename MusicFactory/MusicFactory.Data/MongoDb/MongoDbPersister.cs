@@ -1,4 +1,4 @@
-﻿namespace MusicFactory.Data
+﻿namespace MusicFactory.Data.MongoDb
 {
     using MusicFactory.Models;
     using MusicFactory.Models.MongoDb;
@@ -29,20 +29,23 @@
             this.Database = this.Server.GetDatabase(databaseName);
         }
 
+        /// <summary>
+        /// Method for generating dummy data
+        /// </summary>
         public void SaveData()
         {
-            this.Database.DropCollection("albums");
-            this.Database.CreateCollection("albums");
+           // this.Database.DropCollection("albums");
+           // this.Database.CreateCollection("albums");
 
             var collection = this.Database.GetCollection<AlbumMongoDbProjection>("albums");
             
-            var song1 = new SongMongoDbProjection() { Title = "SOong1", Duration = 3, GenreName = "Rap" };
-            var song2 = new SongMongoDbProjection() { Title = "SOon2", Duration = 31, GenreName = "Pop" };
+            var song1 = new SongMongoDbProjection() { Title = "SOong1", Duration = 3, GenreName = "RNB" };
+            var song2 = new SongMongoDbProjection() { Title = "SOon2", Duration = 31, GenreName = "Rock" };
             var song3 = new SongMongoDbProjection() { Title = "SOong33333333", Duration = 72, GenreName = "Rap" };
             List<SongMongoDbProjection> songs = new List<SongMongoDbProjection> { song1, song2, song3 };
 
             var album =
-                new AlbumMongoDbProjection() { AlbumTitle = "Rap god!", ReleaseDate = DateTime.Now, AlbumPrice = 5.2m, ArtistName = "Madonna", Songs = songs, ArtistLabel = "Universal" };
+                new AlbumMongoDbProjection() { AlbumTitle = "Rap god!", ReleaseDate = DateTime.Now, AlbumPrice = 5.2m, ArtistName = "Rihanna", Songs = songs, ArtistLabel = "Virginia" };
 
             collection.Insert<AlbumMongoDbProjection>(album);
         }

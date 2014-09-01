@@ -54,8 +54,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MongoDbToSqlServerTransferer.cs" />
-    <Compile Include="MongoDbPersister.cs" />
+    <Compile Include="MongoDb\MongoDbToSqlServerTransferer.cs" />
+    <Compile Include="MongoDb\MongoDbPersister.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
