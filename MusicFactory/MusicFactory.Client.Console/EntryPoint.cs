@@ -1,6 +1,6 @@
 ﻿namespace MusicFactory.Engine
 {
-    using MusicFactory.Data;
+    using MusicFactory.Data.MongoDb;
     using MusicFactory.Models;
     using MusicFactory.Reporters;
 
@@ -17,14 +17,14 @@
             //db.Albums.Add(album);
 
 
-            var persister = new MongoDbPersister();
+            //var persister = new MongoDbPersister();
 
-            persister.SaveData();
-            var album = persister.GetSingleAlbum();
+            //persister.SaveData();
+            //var album = persister.GetSingleAlbum();
 
             MongoDbToSqlServerTransferer transferer = new MongoDbToSqlServerTransferer();
 
-            transferer.TransferSingleRecord();
+            transferer.TransferAllRecords();
 
             //var pdfReporter = new PdfReporter();
 

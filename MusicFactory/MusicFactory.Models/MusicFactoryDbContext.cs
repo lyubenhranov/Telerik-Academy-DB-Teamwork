@@ -7,27 +7,43 @@ namespace MusicFactory.Models
 
     public class MusicFactoryDbContext : DbContext
     {
-        public MusicFactoryDbContext()
-            : base("name=MusicFactoryModels")
+        public MusicFactoryDbContext() : base("name=MusicFactoryModels")
         {
+            Database.SetInitializer<MusicFactoryDbContext>(new DropCreateDatabaseIfModelChanges<MusicFactoryDbContext>());
         }
 
         public virtual DbSet<Album> Albums { get; set; }
+
         public virtual DbSet<Artist> Artists { get; set; }
+
         public virtual DbSet<Genre> Genres { get; set; }
+
         public virtual DbSet<Lable> Lables { get; set; }
+
         public virtual DbSet<Song> Songs { get; set; }
+
+        // Consider moving to another database
+        public virtual IDbSet<Retailer> Retailers { get; set; }
+
+        public virtual IDbSet<Store> Stores { get; set; }
+
+        public virtual IDbSet<Location> Locations { get; set; }
+
+        public virtual IDbSet<Order> Orders { get; set; }
+
+        public virtual IDbSet<OrderDetail> OrderDetails { get; set; }
+
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Album>()
-                .Property(e => e.Title)
-                .IsUnicode(false);
+                        .Property(e => e.Title)
+                        .IsUnicode(false);
 
             modelBuilder.Entity<Album>()
-                .Property(e => e.Price)
-                .HasPrecision(19, 4);
+                        .Property(e => e.Price)
+                        .HasPrecision(19, 4);
 
             //modelBuilder.Entity<Album>()
             //    .HasMany(e => e.Songs)
@@ -41,19 +57,18 @@ namespace MusicFactory.Models
             //    .Map(m => m.ToTable("Albums.Genres").MapLeftKey("AlbumID").MapRightKey("GenreID"));
 
             modelBuilder.Entity<Artist>()
-                .Property(e => e.Name)
-                .IsUnicode(false);
+                        .Property(e => e.Name)
+                        .IsUnicode(false);
 
             modelBuilder.Entity<Artist>()
-                .HasMany(e => e.Albums)
-                .WithRequired(e => e.Artist)
-                .WillCascadeOnDelete(false);
+                        .HasMany(e => e.Albums)
+                        .WithRequired(e => e.Artist)
+                        .WillCascadeOnDelete(false);
 
             //modelBuilder.Entity<Artist>()
             //    .HasMany(e => e.Songs)
             //    .WithRequired(e => e.Artist)
             //    .WillCascadeOnDelete(false);
-
 
             //modelBuilder.Entity<Artist>()
             //    .HasMany(e => e.Genres)
@@ -61,21 +76,21 @@ namespace MusicFactory.Models
             //    .Map(m => m.ToTable("Artists.Genres").MapLeftKey("ArtistID").MapRightKey("GenreID"));
 
             modelBuilder.Entity<Genre>()
-                .Property(e => e.Name)
-                .IsUnicode(false);
+                        .Property(e => e.Name)
+                        .IsUnicode(false);
 
             modelBuilder.Entity<Lable>()
-                .Property(e => e.LegalName)
-                .IsUnicode(false);
+                        .Property(e => e.LegalName)
+                        .IsUnicode(false);
 
             modelBuilder.Entity<Lable>()
-                .HasMany(e => e.Artists)
-                .WithOptional(e => e.Lable)
-                .HasForeignKey(e => e.LableID);
+                        .HasMany(e => e.Artists)
+                        .WithOptional(e => e.Lable)
+                        .HasForeignKey(e => e.LableID);
 
             modelBuilder.Entity<Song>()
-                .Property(e => e.Title)
-                .IsUnicode(false);
+                        .Property(e => e.Title)
+                        .IsUnicode(false);
         }
     }
 }

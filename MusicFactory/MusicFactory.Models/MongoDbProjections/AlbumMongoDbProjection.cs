@@ -1,4 +1,4 @@
-﻿namespace MusicFactory.Models.MongoDb
+﻿namespace MusicFactory.Models.MongoDbProjections
 {
     using System;
     using System.Collections.Generic;

@@ -5,9 +5,9 @@
     using System.Linq;
     using MusicFactory.Data.MongoDb;
     using MusicFactory.Models;
-    using MusicFactory.Models.MongoDb;
     using MongoDB.Driver;
     using System.Data.Entity;
+    using MusicFactory.Models.MongoDbProjections;
     
     public class MongoDbToSqlServerTransferer
     {

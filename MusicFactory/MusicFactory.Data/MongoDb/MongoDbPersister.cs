@@ -1,11 +1,11 @@
 ﻿namespace MusicFactory.Data.MongoDb
 {
     using MusicFactory.Models;
-    using MusicFactory.Models.MongoDb;
     using MongoDB.Driver;
     using System.Collections.Generic;
     using System;
     using System.Linq;
+    using MusicFactory.Models.MongoDbProjections;
 
     public class MongoDbPersister
     {
