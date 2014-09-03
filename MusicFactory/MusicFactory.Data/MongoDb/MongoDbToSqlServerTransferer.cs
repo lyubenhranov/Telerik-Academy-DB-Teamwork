@@ -8,14 +8,15 @@
     using MongoDB.Driver;
     using System.Data.Entity;
     using MusicFactory.Models.MongoDbProjections;
-    
+
     public class MongoDbToSqlServerTransferer
     {
         private MongoDbPersister MongoDbPersister { get; set; }
 
         private MusicFactoryDbContext SqlServerContext { get; set; }
 
-        public MongoDbToSqlServerTransferer() : this(new MongoDbPersister(), new MusicFactoryDbContext())
+        public MongoDbToSqlServerTransferer()
+            : this(new MongoDbPersister(), new MusicFactoryDbContext())
         {
         }
 
@@ -24,7 +25,7 @@
             this.MongoDbPersister = mongoDbPersister;
             this.SqlServerContext = sqlServerContext;
         }
-       
+
         /// <summary>
         /// Parses the album projection from the MongoDb database to valid Sql Server objects
         /// </summary>
@@ -49,8 +50,8 @@
             }
 
             artist.Songs = songsToDb;
-            
-            var parsedAlbum = new Album() { Title = albumProjection.AlbumTitle,  ReleaseDate = albumProjection.ReleaseDate, Songs = songsToDb, Artist = artist, Label = label };
+
+            var parsedAlbum = new Album() { Title = albumProjection.AlbumTitle, ReleaseDate = albumProjection.ReleaseDate, Songs = songsToDb, Artist = artist, Label = label };
 
             foreach (var song in songsToDb)
             {
@@ -106,7 +107,7 @@
                     song.Genre = genreInDb;
                 }
             }
-            
+
             return album;
         }
 
@@ -132,6 +133,14 @@
                 SqlServerContext.Albums.Add(parsedAlbum);
                 this.SqlServerContext.SaveChanges();
             }
+
+            //TODO Remove!!!
+            var country = new Country() { Name = "bulgaria" };
+            var address = new Address() { AddressText = "addrszz", Country = country };
+            var store = new Store() { Name = "Zmeyovo", Address = address };
+
+            this.SqlServerContext.Stores.Add(store);
+            this.SqlServerContext.SaveChanges();
         }
     }
 }
