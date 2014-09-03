@@ -43,7 +43,13 @@
             flowHandler.HandleUserInput();
 
             //var musicFactoryContext = new MusicFactoryDbContext();
-            //var store = new Store();
+            //var country = new Country() { Name = "bulgaria" };
+            //var address = new Address() { AddressText = "addr" ,Country = country};
+            //var store = new Store() { Name = "Zmeyovo" ,Address = address};
+            
+            //musicFactoryContext.Stores.Add(store);
+            //musicFactoryContext.SaveChanges();
+
             //var order = new Order() { OrderDate = DateTime.Now.AddDays(-2), Price = 5, Store = store};
             //var order2 = new Order() { OrderDate = DateTime.Now.AddDays(2), Price = 5 };
             //var order3 = new Order() { OrderDate = DateTime.Now.AddDays(-2), Price = 2 };
@@ -51,10 +57,10 @@
             //var orders = new List<Order> { order, order2, order3, order4 };
 
             //musicFactoryContext.Orders.Add(order);
-            //musicFactoryContext.SaveChanges();
+            
 
-            //var pers = new ExcelPersister();
-            //pers.ExploreDirectory();
+            var pers = new ExcelToSqlServerTransferer();
+            pers.ExploreDirectory();
 
             //var pdfReporter = new PdfReporter();
             //pdfReporter.GenerateReport();
