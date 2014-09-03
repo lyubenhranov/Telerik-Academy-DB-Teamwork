@@ -8,9 +8,9 @@
     using System.Data.SqlClient;
     using System.IO;
 
-    public class PdfReporter : IReporter
+    public class PdfReporter : SalesReporter
     {
-        public void GenerateReport()
+        public override void GenerateReport(int year)
         {
             using (Document doc = new Document())
             {
@@ -43,19 +43,19 @@
                     writer.DirectContent);
 
                 // Table heading
-                Paragraph p = new Paragraph("Product reports");
+                Paragraph p = new Paragraph(String.Format("Sales by Artists for Year {0}", year));
                 p.Alignment = 1;
                 doc.Add(p);
 
-                doc.Add(GenerateTableFromData());
+                doc.Add(GeneratePdfTableFromData());
 
                 Console.WriteLine("PDF report has been successfully generated");
             }
         }
 
-        private IElement GenerateTableFromData()
+        private IElement GeneratePdfTableFromData()
         {
-            string[] col = {"ID", "Name", "Title"};
+            string[] col = {"Artist Name", "Sales"};
             PdfPTable table = new PdfPTable(3);
 
             table.WidthPercentage = 100;
@@ -72,7 +72,7 @@
             }
 
             string connectionString = "Server=LYUBENPC; " +
-            "Database=Northwind; Integrated Security=true";
+            "Database=MusicFactoryTest; Integrated Security=true";
 
             SqlConnection dbConnection = new SqlConnection(connectionString);
 
@@ -80,15 +80,14 @@
 
             using (dbConnection)
             {
-                SqlCommand employeesCommand = new SqlCommand("SELECT TOP 10 EmployeeId AS ID, FirstName + ' ' + LastName AS [Full Name], Title FROM Employees", dbConnection);
+                SqlCommand employeesCommand = new SqlCommand("SELECT artists.Name, SUM(orders.TotalSum) AS [Sales] FROM Orders AS orders JOIN Albums AS albums ON orders.AlbumID = albums.AlbumID	JOIN Artists AS artists ON albums.ArtistID = artists.ArtistID WHERE YEAR(orders.OrderDate) = @year GROUP BY artists.Name ORDER BY artists.Name", dbConnection);
 
                 SqlDataReader employeesReader = employeesCommand.ExecuteReader();
 
                 while (employeesReader.Read())
                 {
-                    table.AddCell(((int)employeesReader["ID"]).ToString());
-                    table.AddCell((string)employeesReader["Full Name"]);
-                    table.AddCell((string)employeesReader["Title"]);
+                    table.AddCell((string)employeesReader["Name"]);
+                    table.AddCell(((decimal)employeesReader["Sales"]).ToString());
                 }
             }
 
