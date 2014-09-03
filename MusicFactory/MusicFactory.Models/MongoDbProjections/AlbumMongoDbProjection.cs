@@ -6,17 +6,16 @@
     public class AlbumMongoDbProjection
     {
         public Guid Id { get; set; }
-
+        
         public string AlbumTitle { get; set; }
-
 
         public DateTime ReleaseDate { get; set; }
 
-        public Guid ArtistId { get; set; }
+       // public int ArtistId { get; set; }
         
         public string ArtistName { get; set; }
 
-        public Guid LabelId { get; set; }
+       // public int LabelId { get; set; }
 
         public string ArtistLabel { get; set; }
 

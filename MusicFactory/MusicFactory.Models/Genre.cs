@@ -10,11 +10,11 @@ namespace MusicFactory.Models
     {
         public Genre()
         {
-            this.GenreID = Guid.NewGuid();
+           // this.GenreID = Guid.NewGuid();
             this.Songs = new HashSet<Song>();
         }
 
-        public Guid GenreID { get; set; }
+        public int GenreID { get; set; }
 
         [StringLength(100)]
         public string Name { get; set; }

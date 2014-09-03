@@ -9,17 +9,17 @@ namespace MusicFactory.Models
     public class Song
     {
         [Key]
-        public Guid SongID { get; set; }
+        public int SongID { get; set; }
 
         [StringLength(100)]
         public string Title { get; set; }
 
         // public Guid? ArtistID { get; set; }
-        public Guid? AlbumID { get; set; }
+        public int? AlbumID { get; set; }
 
         public int? Duration { get; set; }
 
-        public Guid? GenreID { get; set; }
+        public int? GenreID { get; set; }
 
         public virtual Album Album { get; set; }
 
@@ -29,7 +29,7 @@ namespace MusicFactory.Models
 
         public Song()
         {
-            this.SongID = Guid.NewGuid();
+           // this.SongID = Guid.NewGuid();
         }
     }
 }

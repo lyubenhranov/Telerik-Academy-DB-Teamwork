@@ -59,15 +59,15 @@
 
             artist.Albums.Add(parsedAlbum);
 
-            if (albumProjection.LabelId != default(Guid))
-            {
-                label.LabelID = albumProjection.LabelId;
-            }
+            //if (albumProjection.LabelId != default(int))
+            //{
+            //    label.LabelID = albumProjection.LabelId;
+            //}
 
-            if (albumProjection.ArtistId != default(Guid))
-            {
-                artist.ArtistID = albumProjection.ArtistId;
-            }
+            //if (albumProjection.ArtistId != default(int))
+            //{
+            //    artist.ArtistID = albumProjection.ArtistId;
+            //}
 
             return parsedAlbum;
         }

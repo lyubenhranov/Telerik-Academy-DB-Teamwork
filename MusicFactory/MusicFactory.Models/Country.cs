@@ -4,13 +4,13 @@
 
     public class Country
     {
-        public Guid CountryId { get; set; }
+        public int CountryId { get; set; }
 
         public string Name { get; set; }
 
         public Country()
         {
-            this.CountryId = Guid.NewGuid();
+            //this.CountryId = Guid.NewGuid();
         }
     }
 }

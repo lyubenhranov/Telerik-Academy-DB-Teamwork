@@ -5,13 +5,13 @@
 
     public class Order
     {
-        public Guid OrderID { get; set; }
+        public int OrderID { get; set; }
 
         public DateTime OrderDate { get; set; }
 
-        public Guid? AlbumId { get; set; }
+        public int? AlbumId { get; set; }
 
-        public Guid StoreId { get; set; }
+        public int StoreId { get; set; }
 
         public decimal Price { get; set; }
 
@@ -25,7 +25,7 @@
 
         public Order()
         {
-            this.OrderID = Guid.NewGuid();
+            //this.OrderID = Guid.NewGuid();
         }
     }
 }

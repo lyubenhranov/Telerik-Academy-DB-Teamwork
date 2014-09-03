@@ -79,7 +79,7 @@
                 var rows = table.Rows;
                 for (int i = 1; i < rows.Count; i++)
                 {
-                    var albumId = Guid.Parse((string)rows[i][0]);
+                    var albumId = int.Parse(rows[i][0].ToString());
                     var quantity = int.Parse(rows[i][1].ToString());
                     var price = decimal.Parse(rows[i][2].ToString());
                     var total = decimal.Parse(rows[i][3].ToString());

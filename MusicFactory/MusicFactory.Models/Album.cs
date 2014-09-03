@@ -11,21 +11,21 @@ namespace MusicFactory.Models
     {
         public Album()
         {
-            this.AlbumID = Guid.NewGuid();
+            //this.AlbumID = Guid.NewGuid();
             Songs = new HashSet<Song>();
         }
         
-        public Guid AlbumID { get; set; }
-
+        public int AlbumID { get; set; }
+        
         [StringLength(100)]
         public string Title { get; set; }
 
-        public Guid ArtistID { get; set; }
+        public int ArtistID { get; set; }
 
         [Column(TypeName = "smalldatetime")]
         public DateTime? ReleaseDate { get; set; }
         
-        public Guid? LabelID { get; set; }
+        public int? LabelID { get; set; }
 
         public virtual Lable Label { get; set; }
 

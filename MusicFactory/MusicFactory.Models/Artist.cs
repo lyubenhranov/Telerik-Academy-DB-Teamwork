@@ -10,18 +10,18 @@ namespace MusicFactory.Models
     {
         public Artist()
         {
-            this.ArtistID = Guid.NewGuid();
+            //this.ArtistID = Guid.NewGuid();
             Albums = new HashSet<Album>();
             Songs = new HashSet<Song>();
         }
 
         [Key]
-        public Guid ArtistID { get; set; }
+        public int ArtistID { get; set; }
 
         [StringLength(100)]
         public string Name { get; set; }
 
-        public Guid? LableID { get; set; }
+        public int? LableID { get; set; }
 
         public virtual ICollection<Album> Albums { get; set; }
 
