@@ -71,7 +71,7 @@
         private Album ValidateAlbumInfo(Album album)
         {
             var artistInDb = this.SqlServerContext.Artists.FirstOrDefault(a => a.Name == album.Artist.Name);
-            var label = this.SqlServerContext.Lables.FirstOrDefault(l => l.LegalName == album.Label.LegalName);
+            var labelInDb = this.SqlServerContext.Lables.FirstOrDefault(l => l.LegalName == album.Label.LegalName);
 
             if (artistInDb != null)
             {
@@ -82,10 +82,10 @@
                 }
             }
 
-            if (label != null)
+            if (labelInDb != null)
             {
-                album.Label = label;
-                album.Artist.Lable = label;
+                album.Label = labelInDb;
+                album.Artist.Lable = labelInDb;
             }
             
             foreach (var song in album.Songs)

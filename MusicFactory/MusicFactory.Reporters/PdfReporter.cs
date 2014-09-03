@@ -71,7 +71,7 @@
                 table.AddCell(cell);
             }
 
-            string connectionString = "Server=LYUBENPC; " +
+            string connectionString = "Server=.; " +
             "Database=MusicFactoryTest; Integrated Security=true";
 
             SqlConnection dbConnection = new SqlConnection(connectionString);
