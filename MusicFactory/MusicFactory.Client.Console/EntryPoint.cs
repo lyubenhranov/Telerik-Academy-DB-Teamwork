@@ -8,29 +8,29 @@
 
             // SASHO   
             // Fill in MongoDB database with data
-            flowHandler.FillMongoDbWithData();
+       //     flowHandler.FillMongoDbWithData();
 
             // Insert the data to SQL Server
-            flowHandler.TransferDataFromMongoToSqlServer();
+     //       flowHandler.TransferDataFromMongoToSqlServer();
 
             //IVETO
             // Read XML data AND Transfer the data to SQL Server and MongoDB
-            flowHandler.TransferXmlDataToMongoAndSqlServer();
+     //       flowHandler.TransferXmlDataToMongoAndSqlServer();
 
             // Read the data from Excel and transfer it to the SQL Server
-            flowHandler.TransferDataFromExcelToSqlServer();
+     //       flowHandler.TransferDataFromExcelToSqlServer();
 
             // LYUBO
             // Generate PDF and XML reports from SQL Server
-            flowHandler.GeneratePdfReportForYear(2014, "2014-Artists-Sales-Report");
-            flowHandler.GenerateXmlReportForYear(2014, "2014-Artists-Sales-Report");
+      //      flowHandler.GeneratePdfReportForYear(2014, "2014-Artists-Sales-Report");
+      //      flowHandler.GenerateXmlReportForYear(2014, "2014-Artists-Sales-Report");
 
             // IVCHO
             // Create the MySQL database
-            flowHandler.CreateMySqlDatabase();
+        //    flowHandler.CreateMySqlDatabase();
 
             // Generate reports from SQL Server AND Put the reports in JSON and MySQL
-            flowHandler.TransferReportsToMySqlAndJson();
+      //      flowHandler.TransferReportsToMySqlAndJson();
 
             
 
@@ -41,7 +41,7 @@
 
             // LYUBO
             // Console interface for reports
-            flowHandler.HandleUserInput();
+       //     flowHandler.HandleUserInput();
         }
     }
 }
