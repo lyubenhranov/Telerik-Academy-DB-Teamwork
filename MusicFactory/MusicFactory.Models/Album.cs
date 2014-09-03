@@ -24,10 +24,7 @@ namespace MusicFactory.Models
 
         [Column(TypeName = "smalldatetime")]
         public DateTime? ReleaseDate { get; set; }
-
-        [Column(TypeName = "money")]
-        public decimal? Price { get; set; }
-
+        
         public Guid? LabelID { get; set; }
 
         public virtual Lable Label { get; set; }

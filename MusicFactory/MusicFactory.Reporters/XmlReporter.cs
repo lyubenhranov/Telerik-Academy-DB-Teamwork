@@ -13,8 +13,8 @@ namespace MusicFactory.Reporters
     {
         public override void GenerateReport(int year)
         {
-            string connectionString = "Server=LYUBENPC; " +
-            "Database=MusicFactoryTest; Integrated Security=true";
+            string connectionString = "Server=.; " +
+            "Database=MusicFactory; Integrated Security=true";
 
             SqlConnection musicFactoryDbConnection = new SqlConnection(connectionString);
 

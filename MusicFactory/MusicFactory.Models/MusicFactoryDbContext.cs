@@ -40,9 +40,6 @@ namespace MusicFactory.Models
                         .Property(e => e.Title)
                         .IsUnicode(false);
 
-            modelBuilder.Entity<Album>()
-                        .Property(e => e.Price)
-                        .HasPrecision(19, 4);
 
             //modelBuilder.Entity<Album>()
             //    .HasMany(e => e.Songs)

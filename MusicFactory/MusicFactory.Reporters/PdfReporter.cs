@@ -72,7 +72,7 @@
             }
 
             string connectionString = "Server=.; " +
-            "Database=MusicFactoryTest; Integrated Security=true";
+            "Database=MusicFactory; Integrated Security=true";
 
             SqlConnection dbConnection = new SqlConnection(connectionString);
 

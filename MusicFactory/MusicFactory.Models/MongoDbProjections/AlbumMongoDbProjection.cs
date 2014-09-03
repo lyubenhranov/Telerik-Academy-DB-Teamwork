@@ -9,7 +9,6 @@
 
         public string AlbumTitle { get; set; }
 
-        public decimal AlbumPrice { get; set; }
 
         public DateTime ReleaseDate { get; set; }
 

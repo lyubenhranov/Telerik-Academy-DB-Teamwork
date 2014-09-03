@@ -43,7 +43,7 @@
 
             artist.Songs = songsToDb;
             
-            var parsedAlbum = new Album() { Title = albumProjection.AlbumTitle, Price = albumProjection.AlbumPrice, ReleaseDate = albumProjection.ReleaseDate, Songs = songsToDb, Artist = artist, Label = label };
+            var parsedAlbum = new Album() { Title = albumProjection.AlbumTitle,  ReleaseDate = albumProjection.ReleaseDate, Songs = songsToDb, Artist = artist, Label = label };
 
             foreach (var song in songsToDb)
             {
