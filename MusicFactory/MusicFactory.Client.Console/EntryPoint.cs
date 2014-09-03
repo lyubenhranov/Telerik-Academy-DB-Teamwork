@@ -40,9 +40,7 @@
 
             // LYUBO
             // Console interface for reports
-<<<<<<< HEAD
             flowHandler.HandleUserInput();
-=======
 
             //var musicFactoryContext = new MusicFactoryDbContext();
             //var store = new Store();
@@ -62,7 +60,6 @@
             //pdfReporter.GenerateReport();
             //var xmlReporter = new XmlReporter();
             //xmlReporter.GenerateReport();
->>>>>>> origin/master
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using MusicFactory.Reporters.Contracts;
+﻿using MusicFactory.Reporters.Templates;
 using System;
 using System.Collections.Generic;
 using System.Data;

@@ -1,4 +1,4 @@
-﻿namespace MusicFactory.Reporters.Contracts
+﻿namespace MusicFactory.Reporters.Templates
 {
     public abstract class SalesReporter
     {

@@ -1,6 +1,6 @@
 ﻿namespace MusicFactory.Reporters
 {
-    using Contracts;
+    using Templates;
     using iTextSharp.text;
     using iTextSharp.text.pdf;
     using System;
