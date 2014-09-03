@@ -81,8 +81,9 @@
     <Compile Include="MusicFactoryDbContext.cs" />
     <Compile Include="Order.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\MySqlRepository.cs" />
     <Compile Include="Song.cs" />
-    <Compile Include="SQLite\SQLiteRepository.cs" />
+    <Compile Include="Repositories\SQLiteRepository.cs" />
     <Compile Include="Store.cs" />
     <Compile Include="sysdiagram.cs" />
   </ItemGroup>

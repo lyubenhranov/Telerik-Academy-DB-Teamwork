@@ -12,7 +12,7 @@
 
             // Insert the data to SQL Server
             flowHandler.TransferDataFromMongoToSqlServer();
-
+            
             // Read the data from Excel and transfer it to the SQL Server
             flowHandler.TransferDataFromExcelToSqlServer();
 
