@@ -8,10 +8,8 @@
         public Guid StoreId { get; set; }
 
         public Retailer Owner { get; set; }
-
-        public int? LocationId { get; set; }
-
-        public virtual Location Location { get; set; }
+        
+        public string Location { get; set; }
 
         public virtual ICollection<Order> Orders { get; set; }
 

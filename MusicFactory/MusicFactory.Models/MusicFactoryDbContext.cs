@@ -26,12 +26,8 @@ namespace MusicFactory.Models
         public virtual IDbSet<Retailer> Retailers { get; set; }
 
         public virtual IDbSet<Store> Stores { get; set; }
-
-        public virtual IDbSet<Location> Locations { get; set; }
-
+        
         public virtual IDbSet<Order> Orders { get; set; }
-
-        public virtual IDbSet<OrderDetail> OrderDetails { get; set; }
 
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
 

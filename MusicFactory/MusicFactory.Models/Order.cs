@@ -9,12 +9,23 @@
 
         public DateTime OrderDate { get; set; }
 
-        public virtual ICollection<OrderDetail> OrderDetails { get; set; }
+        public Guid? AlbumId { get; set; }
+
+        public Guid StoreId { get; set; }
+
+        public decimal Price { get; set; }
+
+        public int Quantity { get; set; }
+
+        public decimal TotalSum { get; set; }
+
+        public virtual Album Album { get; set; }
+
+        public virtual Store Store { get; set; }
 
         public Order()
         {
             this.OrderID = Guid.NewGuid();
-            this.OrderDetails = new HashSet<OrderDetail>();
         }
     }
 }
