@@ -53,6 +53,7 @@
       <Private>True</Private>
       <HintPath>..\packages\MySql.Data.6.8.3\lib\net45\MySql.Data.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -103,6 +104,10 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MusicFactory.DataAccessModel-Sales\MusicFactory.DataAccessModel-Sales.csproj">
+      <Project>{c50145e6-a244-4f1f-b41f-90d1925b4a00}</Project>
+      <Name>MusicFactory.DataAccessModel-Sales</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MusicFactory.Data\MusicFactory.Data.csproj">
       <Project>{5143f7be-51fb-426d-b351-e377e5feb7cb}</Project>
       <Name>MusicFactory.Data</Name>

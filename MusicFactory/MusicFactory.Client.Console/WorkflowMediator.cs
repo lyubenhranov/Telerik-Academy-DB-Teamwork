@@ -1,16 +1,15 @@
 ﻿namespace MusicFactory.Engine
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using MusicFactory.Reporters;
-    using MusicFactory.Models.SQLite;
-    using MusicFactory.Models.MySQL;
-    using MySql.Data.MySqlClient;
-    using System.Text;
-    using System.Threading.Tasks;
     using MusicFactory.Data.MongoDb;
-    using MusicFactory.Data;
+    using MusicFactory.DataAccessModel_Sales;
+    using MusicFactory.Models;
+    using MusicFactory.Models.SQLite;
+    using MusicFactory.Reporters;
+    using MySql.Data.MySqlClient;
+    using Newtonsoft.Json;
+    using System;
+    using System.IO;
+    using System.Linq;
 
     public class WorkflowMediator
     {
@@ -28,8 +27,7 @@
 
         public void TransferDataFromExcelToSqlServer()
         {
-            var excelPersister = new ExcelToSqlServerTransferer();
-            excelPersister.ExploreDirectory();
+
         }
 
         public void GeneratePdfReportForYear(int year, string fileName)
@@ -57,12 +55,73 @@
                 MySqlCommand insertBookCommand = new MySqlCommand("CREATE DATABASE  IF NOT EXISTS `musicfactory`; USE `musicfactory`;  DROP TABLE IF EXISTS `salesbycountry`; /*!40101 SET @saved_cs_client     = @@character_set_client */; /*!40101 SET character_set_client = utf8 */; CREATE TABLE `salesbycountry` (   `CountryName` varchar(100) NOT NULL,   `Sales` decimal(10,0) NOT NULL,   `Year` int(11) NOT NULL,   PRIMARY KEY (`CountryName`) ) ENGINE=InnoDB DEFAULT CHARSET=latin1;", musicFactoryDatabaseContext);
 
                 insertBookCommand.ExecuteNonQuery();
+
+                EntitiesModel dbContext = new EntitiesModel();
+
+                using (dbContext)
+                {
+                    string[] allPaths = Directory.GetFiles("../../Json-Reports/");
+
+                    foreach (var path in allPaths)
+                    {
+                        string[] report = File.ReadAllLines(path);
+
+                        foreach (var item in report)
+                        {
+                            Console.WriteLine(item);
+                        }
+
+                        var parsedReport = JsonConvert.DeserializeObject<Salesbycountry>(report[0]);
+
+                        Salesbycountry salesTable = new Salesbycountry();
+                        salesTable.CountryName = parsedReport.CountryName;
+                        salesTable.Sales = parsedReport.Sales;
+                        salesTable.Year = parsedReport.Year;
+
+                        dbContext.Add(salesTable);
+
+                        dbContext.SaveChanges();
+                    }
+                }
             }
         }
 
         public void TransferReportsToMySqlAndJson()
         {
+            MusicFactoryDbContext context = new MusicFactoryDbContext();
 
+            using (context)
+            {
+                var allData = from order in context.Orders
+                              join store in context.Stores on order.StoreId equals store.StoreId
+                              join address in context.Addresses on store.AddressId equals address.AddressId
+                              join country in context.Countries on address.CountryId equals country.CountryId
+                              select new
+                              {
+                                  countryName = country.Name,
+                                  countryId = country.CountryId,
+                                  orderTotalSales = order.TotalSum,
+                                  orderDate = order.OrderDate
+                              };
+
+                var groupedData = allData.GroupBy(a => a.countryName);
+
+                foreach (var eachGroup in groupedData)
+                {
+                    foreach (var data in eachGroup)
+                    {
+                        var salesObject = new
+                        {
+                            countryName = data.countryName,
+                            sales = data.orderTotalSales,
+                            year = data.orderDate.Year
+                        };
+
+                        var serializedSalesObject = JsonConvert.SerializeObject(salesObject);
+                        File.WriteAllText("../../Json-Reports/sales" + data.countryId + ".json", serializedSalesObject);
+                    }
+                }
+            }
         }
 
         public void TransferXmlDataToMongoAndSqlServer()
@@ -76,13 +135,6 @@
 
             sqliteRepository.CreateDatabase("additionalProductInfo");
             sqliteRepository.FillDatabaseWithData();
-
-            // Get the data from MySQL
-            var mysqlRepository = new MySqlRepository();
-
-            // Get the data from SQLite
-
-            // Fill the data in Excel 2007
         }
 
         public void HandleUserInput()
