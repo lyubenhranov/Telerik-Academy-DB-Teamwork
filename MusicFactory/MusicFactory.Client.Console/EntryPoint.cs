@@ -41,5 +41,6 @@
             // LYUBO
             // Console interface for reports
             flowHandler.HandleUserInput();
+        }
     }
 }
