@@ -1,6 +1,6 @@
 ﻿namespace MusicFactory.Reporters
 {
-    using Contracts;
+    using Templates;
     using iTextSharp.text;
     using iTextSharp.text.pdf;
     using System;
@@ -8,9 +8,9 @@
     using System.Data.SqlClient;
     using System.IO;
 
-    public class PdfReporter : IReporter
+    public class PdfReporter : SalesReporter
     {
-        public void GenerateReport()
+        public override void GenerateReport(int year)
         {
             using (Document doc = new Document())
             {
@@ -43,36 +43,36 @@
                     writer.DirectContent);
 
                 // Table heading
-                Paragraph p = new Paragraph("Product reports");
+                Paragraph p = new Paragraph(String.Format("Sales by Artists for Year {0}", year));
                 p.Alignment = 1;
                 doc.Add(p);
 
-                doc.Add(GenerateTableFromData());
+                doc.Add(GeneratePdfTableFromData(year));
 
                 Console.WriteLine("PDF report has been successfully generated");
             }
         }
 
-        private IElement GenerateTableFromData()
+        private IElement GeneratePdfTableFromData(int year)
         {
-            string[] col = {"ID", "Name", "Title"};
-            PdfPTable table = new PdfPTable(3);
+            string[] columnTitles = {"Artist Name", "Sales"};
+            PdfPTable table = new PdfPTable(2);
 
             table.WidthPercentage = 100;
 
-            table.SetWidths(new Single[] { 1, 5, 4 });
+            table.SetWidths(new Single[] { 5, 1 });
 
             table.SpacingBefore = 10;
 
-            for (int i = 0; i < col.Length; i++)
+            for (int i = 0; i < columnTitles.Length; i++)
             {
-                PdfPCell cell = new PdfPCell(new Phrase(col[i]));
+                PdfPCell cell = new PdfPCell(new Phrase(columnTitles[i]));
                 cell.BackgroundColor = new BaseColor(42, 212, 255);
                 table.AddCell(cell);
             }
 
             string connectionString = "Server=LYUBENPC; " +
-            "Database=Northwind; Integrated Security=true";
+            "Database=MusicFactoryTest; Integrated Security=true";
 
             SqlConnection dbConnection = new SqlConnection(connectionString);
 
@@ -80,15 +80,16 @@
 
             using (dbConnection)
             {
-                SqlCommand employeesCommand = new SqlCommand("SELECT TOP 10 EmployeeId AS ID, FirstName + ' ' + LastName AS [Full Name], Title FROM Employees", dbConnection);
+                SqlCommand salesByArtistCommand = new SqlCommand("SELECT artists.Name, SUM(orders.TotalSum) AS [Sales] FROM Orders AS orders JOIN Albums AS albums ON orders.AlbumID = albums.AlbumID	JOIN Artists AS artists ON albums.ArtistID = artists.ArtistID WHERE YEAR(orders.OrderDate) = @year GROUP BY artists.Name ORDER BY artists.Name", dbConnection);
 
-                SqlDataReader employeesReader = employeesCommand.ExecuteReader();
+                salesByArtistCommand.Parameters.AddWithValue("@year", year);
 
-                while (employeesReader.Read())
+                SqlDataReader salesByArtistReader = salesByArtistCommand.ExecuteReader();
+
+                while (salesByArtistReader.Read())
                 {
-                    table.AddCell(((int)employeesReader["ID"]).ToString());
-                    table.AddCell((string)employeesReader["Full Name"]);
-                    table.AddCell((string)employeesReader["Title"]);
+                    table.AddCell((string)salesByArtistReader["Name"]);
+                    table.AddCell(((decimal)salesByArtistReader["Sales"]).ToString());
                 }
             }
 

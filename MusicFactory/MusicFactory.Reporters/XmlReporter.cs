@@ -1,4 +1,4 @@
-﻿using MusicFactory.Reporters.Contracts;
+﻿using MusicFactory.Reporters.Templates;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -9,27 +9,29 @@ using System.Threading.Tasks;
 
 namespace MusicFactory.Reporters
 {
-    public class XmlReporter : IReporter
+    public class XmlReporter : SalesReporter
     {
-        public void GenerateReport()
+        public override void GenerateReport(int year)
         {
             string connectionString = "Server=LYUBENPC; " +
-            "Database=Northwind; Integrated Security=true";
+            "Database=MusicFactoryTest; Integrated Security=true";
 
-            SqlConnection dbConnection = new SqlConnection(connectionString);
+            SqlConnection musicFactoryDbConnection = new SqlConnection(connectionString);
 
-            dbConnection.Open();
+            musicFactoryDbConnection.Open();
 
-            using (dbConnection)
+            using (musicFactoryDbConnection)
             {
-                SqlCommand employeesCommand = new SqlCommand("SELECT TOP 10 EmployeeId AS ID, FirstName + ' ' + LastName AS [Full Name], Title FROM Employees", dbConnection);
+                SqlCommand salesByArtistCommand = new SqlCommand("SELECT artists.Name, SUM(orders.TotalSum) AS [Sales] FROM Orders AS orders JOIN Albums AS albums ON orders.AlbumID = albums.AlbumID	JOIN Artists AS artists ON albums.ArtistID = artists.ArtistID WHERE YEAR(orders.OrderDate) = @year GROUP BY artists.Name ORDER BY artists.Name", musicFactoryDbConnection);
 
-                var dataAdapter = new SqlDataAdapter(employeesCommand);
-                var employeesDataTable = new DataTable("Employees");
+                salesByArtistCommand.Parameters.AddWithValue("@year", year);
 
-                dataAdapter.Fill(employeesDataTable);
+                var dataAdapter = new SqlDataAdapter(salesByArtistCommand);
+                var salesByArtistDataTable = new DataTable("Sales By Artist");
 
-                employeesDataTable.WriteXml(@"..\..\..\Reports\report.xml");
+                dataAdapter.Fill(salesByArtistDataTable);
+
+                salesByArtistDataTable.WriteXml(@"..\..\..\Reports\report.xml");
 
                 Console.WriteLine("XML Report has been successfully generated");
             }
