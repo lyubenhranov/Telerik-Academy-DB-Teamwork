@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicFactory.Client.Console", "MusicFactory.Client.Console\MusicFactory.Client.Console.csproj", "{35C6C070-EED4-40E2-910A-ADED3016BD28}"
 EndProject
@@ -14,11 +14,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{90C640
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicFactory.Models", "MusicFactory.Models\MusicFactory.Models.csproj", "{804CA510-E3D0-4E23-8997-0E91934D736C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicFactory.Client.SavesAsJson", "MusicFactory.Client.SavesAsJson\MusicFactory.Client.SavesAsJson.csproj", "{DEBB22AE-C2D7-4D75-A630-8FA9589E950F}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicFactory.Reporters", "MusicFactory.Reporters\MusicFactory.Reporters.csproj", "{78314E0F-45D1-4E95-9483-7DED4D55682E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicFactory.Data", "MusicFactory.Data\MusicFactory.Data.csproj", "{5143F7BE-51FB-426D-B351-E377E5FEB7CB}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicFactory.DataAccessModel-Sales", "MusicFactory.DataAccessModel-Sales\MusicFactory.DataAccessModel-Sales.csproj", "{C50145E6-A244-4F1F-B41F-90D1925B4A00}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -34,6 +34,10 @@ Global
 		{804CA510-E3D0-4E23-8997-0E91934D736C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{804CA510-E3D0-4E23-8997-0E91934D736C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{804CA510-E3D0-4E23-8997-0E91934D736C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DEBB22AE-C2D7-4D75-A630-8FA9589E950F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DEBB22AE-C2D7-4D75-A630-8FA9589E950F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DEBB22AE-C2D7-4D75-A630-8FA9589E950F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DEBB22AE-C2D7-4D75-A630-8FA9589E950F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{78314E0F-45D1-4E95-9483-7DED4D55682E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{78314E0F-45D1-4E95-9483-7DED4D55682E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{78314E0F-45D1-4E95-9483-7DED4D55682E}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -42,10 +46,6 @@ Global
 		{5143F7BE-51FB-426D-B351-E377E5FEB7CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5143F7BE-51FB-426D-B351-E377E5FEB7CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5143F7BE-51FB-426D-B351-E377E5FEB7CB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C50145E6-A244-4F1F-B41F-90D1925B4A00}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C50145E6-A244-4F1F-B41F-90D1925B4A00}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C50145E6-A244-4F1F-B41F-90D1925B4A00}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C50145E6-A244-4F1F-B41F-90D1925B4A00}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
