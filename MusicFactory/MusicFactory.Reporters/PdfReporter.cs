@@ -10,50 +10,60 @@
 
     public class PdfReporter : SalesReporter
     {
-        public override void GenerateReport(int year)
+        private Document pdfDocument = new Document();
+
+        public override void GenerateReport(int year, string fileName)
         {
-            using (Document doc = new Document())
-            {
-                PdfWriter writer = PdfWriter.GetInstance(doc, new FileStream(@"..\..\..\..\Reports\report.pdf", FileMode.Create));
+            this.pdfDocument = CreatePdfDocument(year, fileName);
 
-                doc.Open();
+            SqlConnection musicFactoryDbConnection = this.GetDatabaseConnection();
 
-                Rectangle page = doc.PageSize;
+            this.TransferDataToFile(year, fileName, musicFactoryDbConnection);
 
-                PdfPTable head = new PdfPTable(1);
-
-                head.TotalWidth = page.Width;
-
-                Phrase phrase = new Phrase(DateTime.UtcNow.ToShortTimeString(), new Font(Font.FontFamily.COURIER, 12));
-
-                PdfPCell c = new PdfPCell(phrase);
-                c.Border = Rectangle.NO_BORDER;
-                c.VerticalAlignment = Element.ALIGN_TOP;
-                c.HorizontalAlignment = Element.ALIGN_CENTER;
-
-                head.AddCell(c);
-
-                head.WriteSelectedRows(
-                    // first/last row; -1 writes all rows 
-                    0, -1,
-                    // left offset
-                    0,
-                    // ** bottom** yPos of the table
-                    page.Height - doc.TopMargin + head.TotalHeight + 20,
-                    writer.DirectContent);
-
-                // Table heading
-                Paragraph p = new Paragraph(String.Format("Sales by Artists for Year {0}", year));
-                p.Alignment = 1;
-                doc.Add(p);
-
-                doc.Add(GeneratePdfTableFromData(year));
-
-                Console.WriteLine("PDF report has been successfully generated");
-            }
+            Console.WriteLine("PDF report has been successfully generated");
         }
 
-        private IElement GeneratePdfTableFromData(int year)
+        private Document CreatePdfDocument(int year, string fileName)
+        {
+            Document pdfDocument = new Document();
+
+            PdfWriter writer = PdfWriter.GetInstance(pdfDocument, new FileStream(System.Configuration.ConfigurationManager.AppSettings["ReportsFolderPath"] + fileName + ".pdf", FileMode.Create));
+
+            pdfDocument.Open();
+
+            Rectangle page = pdfDocument.PageSize;
+
+            PdfPTable head = new PdfPTable(1);
+
+            head.TotalWidth = page.Width;
+
+            Phrase phrase = new Phrase(DateTime.UtcNow.ToShortTimeString(), new Font(Font.FontFamily.COURIER, 12));
+
+            PdfPCell cell = new PdfPCell(phrase);
+            cell.Border = Rectangle.NO_BORDER;
+            cell.VerticalAlignment = Element.ALIGN_TOP;
+            cell.HorizontalAlignment = Element.ALIGN_CENTER;
+
+            head.AddCell(cell);
+
+            head.WriteSelectedRows(
+                // first/last row; -1 writes all rows 
+                0, -1,
+                // left offset
+                0,
+                // ** bottom** yPos of the table
+                page.Height - pdfDocument.TopMargin + head.TotalHeight + 20,
+                writer.DirectContent);
+
+            // Table heading
+            Paragraph pageTitle = new Paragraph(String.Format("Sales by Artists for Year {0}", year));
+            pageTitle.Alignment = 1;
+            pdfDocument.Add(pageTitle);
+
+            return pdfDocument;
+        }
+
+        private PdfPTable GeneratePdfSalesTable()
         {
             string[] columnTitles = {"Artist Name", "Sales"};
             PdfPTable table = new PdfPTable(2);
@@ -71,18 +81,18 @@
                 table.AddCell(cell);
             }
 
-            string connectionString = "Server=.; " +
-            "Database=MusicFactory; Integrated Security=true";
+            return table;
+        }
 
-            SqlConnection dbConnection = new SqlConnection(connectionString);
+        protected override void TransferDataToFile(int year, string fileName, SqlConnection musicFactoryDbConnection)
+        {
+            var table = this.GeneratePdfSalesTable();
 
-            dbConnection.Open();
+            musicFactoryDbConnection.Open();
 
-            using (dbConnection)
+            using (musicFactoryDbConnection)
             {
-                SqlCommand salesByArtistCommand = new SqlCommand("SELECT artists.Name, SUM(orders.TotalSum) AS [Sales] FROM Orders AS orders JOIN Albums AS albums ON orders.AlbumID = albums.AlbumID	JOIN Artists AS artists ON albums.ArtistID = artists.ArtistID WHERE YEAR(orders.OrderDate) = @year GROUP BY artists.Name ORDER BY artists.Name", dbConnection);
-
-                salesByArtistCommand.Parameters.AddWithValue("@year", year);
+                SqlCommand salesByArtistCommand = this.GetSqlCommand(year, musicFactoryDbConnection);
 
                 SqlDataReader salesByArtistReader = salesByArtistCommand.ExecuteReader();
 
@@ -93,7 +103,10 @@
                 }
             }
 
-            return table;
+            using (pdfDocument)
+            {
+                this.pdfDocument.Add(table);
+            }
         }
     }
 }

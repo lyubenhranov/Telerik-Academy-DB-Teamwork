@@ -1,18 +1,10 @@
 ﻿namespace MusicFactory.Engine
 {
-    using MusicFactory.Data;
-    using MusicFactory.Models;
     class EntryPoint
     {
         static void Main()
         {
             var flowHandler = new WorkflowMediator();
-
-
-            var ctxt = new MusicFactoryDbContext();
-
-
-
 
             // SASHO   
             // Fill in MongoDB database with data
@@ -26,8 +18,8 @@
 
             // LYUBO
             // Generate PDF and XML reports from SQL Server
-            flowHandler.GeneratePdfReportForYear(2014);
-            flowHandler.GenerateXmlReportForYear(2014);
+            flowHandler.GeneratePdfReportForYear(2010, "2010-Artists-Sales-Report");
+            flowHandler.GenerateXmlReportForYear(2010, "2010-Artists-Sales-Report");
 
             // IVCHO
             // Create the MySQL database
