@@ -36,9 +36,16 @@
             var songs = albumProjection.Songs;
             var artist = new Artist() { Name = albumProjection.ArtistName, Lable = label };
             var songsToDb = new List<Song>();
+            var genres = new List<Genre>();
             foreach (var song in songs)
             {
-                songsToDb.Add(new Song { Title = song.Title, Duration = song.Duration, Genre = new Genre() { Name = song.GenreName } });
+                var genre = genres.FirstOrDefault(g => g.Name == song.GenreName);
+                if (genre == null)
+                {
+                    genre = new Genre() { Name = song.GenreName };
+                }
+                genres.Add(genre);
+                songsToDb.Add(new Song { Title = song.Title, Duration = song.Duration, Genre = genre });
             }
 
             artist.Songs = songsToDb;
@@ -87,10 +94,12 @@
                 album.Label = labelInDb;
                 album.Artist.Lable = labelInDb;
             }
-            
+
+            var genresInDb = this.SqlServerContext.Genres.ToList();
+
             foreach (var song in album.Songs)
             {
-                var genreInDb = this.SqlServerContext.Genres.FirstOrDefault(g => g.Name == song.Genre.Name);
+                var genreInDb = genresInDb.FirstOrDefault(g => g.Name == song.Genre.Name);
 
                 if (genreInDb != null)
                 {

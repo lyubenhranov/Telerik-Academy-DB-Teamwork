@@ -32,7 +32,18 @@
         /// <summary>
         /// Method for generating dummy data
         /// </summary>
-       
+        public void SaveDummyData()
+        {
+            this.Database.DropCollection("albums");
+            this.Database.CreateCollection("albums");
+
+            var collection = this.Database.GetCollection<AlbumMongoDbProjection>("albums");
+           
+
+            var albums = MongoDbAlbumDataGenarator.GenerateAlbums();
+
+            collection.InsertBatch(albums);
+        }
 
         public AlbumMongoDbProjection GetSingleAlbum()
         {

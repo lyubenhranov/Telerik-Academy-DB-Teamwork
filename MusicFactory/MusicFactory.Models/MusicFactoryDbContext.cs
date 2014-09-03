@@ -9,7 +9,7 @@ namespace MusicFactory.Models
     {
         public MusicFactoryDbContext() : base("name=MusicFactoryModels")
         {
-            Database.SetInitializer<MusicFactoryDbContext>(new DropCreateDatabaseIfModelChanges<MusicFactoryDbContext>());
+            Database.SetInitializer<MusicFactoryDbContext>(new DropCreateDatabaseAlways<MusicFactoryDbContext>());
         }
 
         public virtual DbSet<Album> Albums { get; set; }

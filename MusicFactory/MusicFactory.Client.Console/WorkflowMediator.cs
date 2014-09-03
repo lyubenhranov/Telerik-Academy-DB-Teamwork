@@ -7,17 +7,20 @@
     using MusicFactory.Models.SQLite;
     using System.Text;
     using System.Threading.Tasks;
+    using MusicFactory.Data.MongoDb;
 
     public class WorkflowMediator
     {
         public void FillMongoDbWithData()
         {
-
+            var mongodbPersister = new MongoDbPersister();
+            mongodbPersister.SaveDummyData();
         }
 
         public void TransferDataFromMongoToSqlServer()
         {
-
+            var transferer = new MongoDbToSqlServerTransferer();
+            transferer.TransferAllRecords();
         }
 
         public void TransferDataFromExcelToSqlServer()
