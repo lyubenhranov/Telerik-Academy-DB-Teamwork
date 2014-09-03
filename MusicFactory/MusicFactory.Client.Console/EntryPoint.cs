@@ -1,6 +1,5 @@
 ﻿namespace MusicFactory.Engine
 {
-
     class EntryPoint
     {
         static void Main()
@@ -19,8 +18,8 @@
 
             // LYUBO
             // Generate PDF and XML reports from SQL Server
-            flowHandler.GeneratePdfReportForYear(2010);
-            flowHandler.GenerateXmlReportForYear(2010);
+            flowHandler.GeneratePdfReportForYear(2010, "2010-Artists-Sales-Report");
+            flowHandler.GenerateXmlReportForYear(2010, "2010-Artists-Sales-Report");
 
             // IVCHO
             // Create the MySQL database

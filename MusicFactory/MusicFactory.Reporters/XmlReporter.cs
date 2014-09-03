@@ -11,29 +11,29 @@ namespace MusicFactory.Reporters
 {
     public class XmlReporter : SalesReporter
     {
-        public override void GenerateReport(int year)
+        public override void GenerateReport(int year, string fileName)
         {
-            string connectionString = "Server=.; " +
-            "Database=MusicFactoryTest; Integrated Security=true";
+            SqlConnection musicFactoryDbConnection = this.GetDatabaseConnection();
 
-            SqlConnection musicFactoryDbConnection = new SqlConnection(connectionString);
+            this.TransferDataToFile(year, fileName, musicFactoryDbConnection);
 
+            Console.WriteLine("XML Report has been successfully generated");
+        }
+
+        protected override void TransferDataToFile(int year, string fileName, SqlConnection musicFactoryDbConnection)
+        {
             musicFactoryDbConnection.Open();
 
             using (musicFactoryDbConnection)
             {
-                SqlCommand salesByArtistCommand = new SqlCommand("SELECT artists.Name, SUM(orders.TotalSum) AS [Sales] FROM Orders AS orders JOIN Albums AS albums ON orders.AlbumID = albums.AlbumID	JOIN Artists AS artists ON albums.ArtistID = artists.ArtistID WHERE YEAR(orders.OrderDate) = @year GROUP BY artists.Name ORDER BY artists.Name", musicFactoryDbConnection);
-
-                salesByArtistCommand.Parameters.AddWithValue("@year", year);
+                SqlCommand salesByArtistCommand = this.GetSqlCommand(year, musicFactoryDbConnection);
 
                 var dataAdapter = new SqlDataAdapter(salesByArtistCommand);
                 var salesByArtistDataTable = new DataTable("Sales By Artist");
 
                 dataAdapter.Fill(salesByArtistDataTable);
 
-                salesByArtistDataTable.WriteXml(@"..\..\..\..\Reports\report.xml");
-
-                Console.WriteLine("XML Report has been successfully generated");
+                salesByArtistDataTable.WriteXml(System.Configuration.ConfigurationManager.AppSettings["ReportsFolderPath"] + fileName + ".xml");
             }
         }
     }

@@ -25,16 +25,16 @@
 
         }
 
-        public void GeneratePdfReportForYear(int year)
+        public void GeneratePdfReportForYear(int year, string fileName)
         {
             var pdfReporter = new PdfReporter();
-            pdfReporter.GenerateReport(year);
+            pdfReporter.GenerateReport(year, fileName);
         }
 
-        public void GenerateXmlReportForYear(int year)
+        public void GenerateXmlReportForYear(int year, string fileName)
         {
             var xmlReporter = new XmlReporter();
-            xmlReporter.GenerateReport(year);
+            xmlReporter.GenerateReport(year, fileName);
         }
 
         public void CreateMySqlDatabase()
