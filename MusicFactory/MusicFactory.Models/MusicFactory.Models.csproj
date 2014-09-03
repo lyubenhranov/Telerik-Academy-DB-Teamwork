@@ -79,6 +79,7 @@
     <Compile Include="MongoDbProjections\AlbumMongoDbProjection.cs" />
     <Compile Include="MongoDbProjections\SongMongoDbProjection.cs" />
     <Compile Include="MusicFactoryDbContext.cs" />
+    <Compile Include="MySQL\MySqlRepository.cs" />
     <Compile Include="Order.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Song.cs" />
