@@ -23,10 +23,10 @@
 
             // IVCHO
             // Create the MySQL database
-            flowHandler.CreateMySqlDatabase();
+           // flowHandler.CreateMySqlDatabase();
 
             // Generate reports from SQL Server AND Put the reports in JSON and MySQL
-            flowHandler.TransferReportsToMySqlAndJson();
+            //flowHandler.TransferReportsToMySqlAndJson();
 
             //IVETO
             // Read XML data AND Transfer the data to SQL Server and MongoDB

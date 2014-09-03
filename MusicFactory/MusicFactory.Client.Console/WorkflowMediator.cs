@@ -9,6 +9,7 @@
     using System.Text;
     using System.Threading.Tasks;
     using MusicFactory.Data.MongoDb;
+    using MusicFactory.Data;
 
     public class WorkflowMediator
     {
@@ -26,7 +27,8 @@
 
         public void TransferDataFromExcelToSqlServer()
         {
-
+            var excelPersister = new ExcelToSqlServerTransferer();
+            excelPersister.ExploreDirectory();
         }
 
         public void GeneratePdfReportForYear(int year, string fileName)
