@@ -6,6 +6,8 @@
     {
         public Guid AddressId { get; set; }
 
+        public string AddressText { get; set; }
+
         public Guid CountryId { get; set; }
 
         public virtual Country Country { get; set; }
