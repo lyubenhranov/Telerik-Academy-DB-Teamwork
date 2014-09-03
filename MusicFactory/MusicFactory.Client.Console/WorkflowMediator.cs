@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using MusicFactory.Reporters;
     using System.Text;
     using System.Threading.Tasks;
 
@@ -25,12 +26,14 @@
 
         public void GeneratePdfReportForYear(int year)
         {
-
+            var pdfReporter = new PdfReporter();
+            pdfReporter.GenerateReport(year);
         }
 
         public void GenerateXmlReportForYear(int year)
         {
-
+            var xmlReporter = new XmlReporter();
+            //xmlReporter.GenerateReport(year);
         }
 
         public void CreateMySqlDatabase()

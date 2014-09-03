@@ -47,26 +47,26 @@
                 p.Alignment = 1;
                 doc.Add(p);
 
-                doc.Add(GeneratePdfTableFromData());
+                doc.Add(GeneratePdfTableFromData(year));
 
                 Console.WriteLine("PDF report has been successfully generated");
             }
         }
 
-        private IElement GeneratePdfTableFromData()
+        private IElement GeneratePdfTableFromData(int year)
         {
-            string[] col = {"Artist Name", "Sales"};
-            PdfPTable table = new PdfPTable(3);
+            string[] columnTitles = {"Artist Name", "Sales"};
+            PdfPTable table = new PdfPTable(2);
 
             table.WidthPercentage = 100;
 
-            table.SetWidths(new Single[] { 1, 5, 4 });
+            table.SetWidths(new Single[] { 5, 1 });
 
             table.SpacingBefore = 10;
 
-            for (int i = 0; i < col.Length; i++)
+            for (int i = 0; i < columnTitles.Length; i++)
             {
-                PdfPCell cell = new PdfPCell(new Phrase(col[i]));
+                PdfPCell cell = new PdfPCell(new Phrase(columnTitles[i]));
                 cell.BackgroundColor = new BaseColor(42, 212, 255);
                 table.AddCell(cell);
             }
@@ -80,14 +80,16 @@
 
             using (dbConnection)
             {
-                SqlCommand employeesCommand = new SqlCommand("SELECT artists.Name, SUM(orders.TotalSum) AS [Sales] FROM Orders AS orders JOIN Albums AS albums ON orders.AlbumID = albums.AlbumID	JOIN Artists AS artists ON albums.ArtistID = artists.ArtistID WHERE YEAR(orders.OrderDate) = @year GROUP BY artists.Name ORDER BY artists.Name", dbConnection);
+                SqlCommand salesByArtistCommand = new SqlCommand("SELECT artists.Name, SUM(orders.TotalSum) AS [Sales] FROM Orders AS orders JOIN Albums AS albums ON orders.AlbumID = albums.AlbumID	JOIN Artists AS artists ON albums.ArtistID = artists.ArtistID WHERE YEAR(orders.OrderDate) = @year GROUP BY artists.Name ORDER BY artists.Name", dbConnection);
 
-                SqlDataReader employeesReader = employeesCommand.ExecuteReader();
+                salesByArtistCommand.Parameters.AddWithValue("@year", year);
 
-                while (employeesReader.Read())
+                SqlDataReader salesByArtistReader = salesByArtistCommand.ExecuteReader();
+
+                while (salesByArtistReader.Read())
                 {
-                    table.AddCell((string)employeesReader["Name"]);
-                    table.AddCell(((decimal)employeesReader["Sales"]).ToString());
+                    table.AddCell((string)salesByArtistReader["Name"]);
+                    table.AddCell(((decimal)salesByArtistReader["Sales"]).ToString());
                 }
             }
 
