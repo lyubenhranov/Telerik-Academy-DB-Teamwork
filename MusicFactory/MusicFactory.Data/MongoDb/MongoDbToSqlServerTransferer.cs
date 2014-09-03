@@ -123,7 +123,7 @@
 
         //TODO Fix: mutiple queries to the sql server
         public void TransferAllRecords()
-        {
+        {          
             var mongoDbAlbums = this.MongoDbPersister.GetAllAlbums();
             foreach (var mongoDbAlbum in mongoDbAlbums)
             {
