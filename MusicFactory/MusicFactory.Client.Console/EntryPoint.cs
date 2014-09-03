@@ -44,7 +44,9 @@
             // LYUBO
             // Console interface for reports
 
-            //var order = new Order() { OrderDate = DateTime.Now.AddDays(-2), Price = 5 };
+            //var musicFactoryContext = new MusicFactoryDbContext();
+            //var store = new Store();
+            //var order = new Order() { OrderDate = DateTime.Now.AddDays(-2), Price = 5, Store = store};
             //var order2 = new Order() { OrderDate = DateTime.Now.AddDays(2), Price = 5 };
             //var order3 = new Order() { OrderDate = DateTime.Now.AddDays(-2), Price = 2 };
             //var order4 = new Order() { OrderDate = DateTime.Now.AddDays(-2), Price = 1 };
@@ -52,8 +54,9 @@
 
             //musicFactoryContext.Orders.Add(order);
             //musicFactoryContext.SaveChanges();
-           // var pers = new ExcelPersister();
 
+            //var pers = new ExcelPersister();
+            //pers.ExploreDirectory();
 
             //var pdfReporter = new PdfReporter();
             //pdfReporter.GenerateReport();

@@ -23,11 +23,14 @@ namespace MusicFactory.Models
         public virtual DbSet<Song> Songs { get; set; }
 
         // Consider moving to another database
-        public virtual IDbSet<Retailer> Retailers { get; set; }
 
         public virtual IDbSet<Store> Stores { get; set; }
         
         public virtual IDbSet<Order> Orders { get; set; }
+
+        public virtual IDbSet<Address> Addresses { get; set; }
+
+        public virtual IDbSet<Country> Countries { get; set; }
 
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
 
