@@ -1,5 +1,6 @@
 ﻿namespace MusicFactory.Engine
 {
+    using MusicFactory.Data;
     using MusicFactory.Data.MongoDb;
     using MusicFactory.DataAccessModel_Sales;
     using MusicFactory.Models;
@@ -27,7 +28,8 @@
 
         public void TransferDataFromExcelToSqlServer()
         {
-
+            var excelPersister = new ExcelToSqlServerTransferer();
+            excelPersister.ExploreDirectory();
         }
 
         public void GeneratePdfReportForYear(int year, string fileName)
@@ -60,7 +62,7 @@
 
                 using (dbContext)
                 {
-                    string[] allPaths = Directory.GetFiles("../../Json-Reports/");
+                    string[] allPaths = Directory.GetFiles("..\\..\\..\\..\\Reports\\JSON\\");
 
                     foreach (var path in allPaths)
                     {
@@ -118,7 +120,7 @@
                         };
 
                         var serializedSalesObject = JsonConvert.SerializeObject(salesObject);
-                        File.WriteAllText("../../Json-Reports/sales" + data.countryId + ".json", serializedSalesObject);
+                        File.WriteAllText("..\\..\\..\\..\\Reports\\JSON\\" + data.countryId + ".json", serializedSalesObject);
                     }
                 }
             }
