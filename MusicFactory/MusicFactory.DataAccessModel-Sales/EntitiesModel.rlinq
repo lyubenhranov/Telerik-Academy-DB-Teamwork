@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<DomainModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" dslVersion="2.0.0.0" name="EntitiesModel" namespace="MusicFactory.DataAccessModel_Sales" showPropertiesCompartment="true" xmlns="http://www.telerik.com/ORM">
+  <orm:orm name="EntitiesModel" backend="mysql" xmlns:orm="http://tempuri.org/ORM">
+    <orm:namespace name="MusicFactory.DataAccessModel_Sales" default="true">
+      <orm:class name="Salesbycountry" uniqueId="bbd4bdc0-c07b-4659-bcb0-43a5a1c8bd34">
+        <orm:table name="salesbycountry" />
+        <orm:identity>
+          <orm:single-field field-name="_countryName" />
+        </orm:identity>
+        <orm:concurrency strategy="changed" />
+        <orm:field name="_countryName" property="CountryName" behavior="readwrite" uniqueId="1be9aa3c-2ebe-4cad-94f9-6b50c18362a5" type="System.String">
+          <orm:column name="CountryName" sql-type="varchar" nullable="false" length="100" scale="0" primary-key="true" ado-type="StringVariableLength" />
+        </orm:field>
+        <orm:field name="_sales" property="Sales" behavior="readwrite" uniqueId="e5c4f936-7421-4e1a-9c69-d6915f785c17" type="System.Int64">
+          <orm:column name="Sales" sql-type="decimal" nullable="false" length="10" scale="0" ado-type="Decimal" />
+        </orm:field>
+        <orm:field name="_year" property="Year" behavior="readwrite" uniqueId="62b3afa6-a156-4a8b-9b91-0b8b584fe43a" type="System.Int32">
+          <orm:column name="Year" sql-type="integer" nullable="false" length="0" scale="0" ado-type="Int32" />
+        </orm:field>
+      </orm:class>
+    </orm:namespace>
+    <orm:schema schema="">
+      <orm:table name="salesbycountry">
+        <orm:column name="CountryName" sql-type="varchar" nullable="false" length="100" scale="0" primary-key="true" ado-type="StringVariableLength" />
+        <orm:column name="Sales" sql-type="decimal" nullable="false" length="10" scale="0" ado-type="Decimal" />
+        <orm:column name="Year" sql-type="integer" nullable="false" length="0" scale="0" ado-type="Int32" />
+      </orm:table>
+    </orm:schema>
+    <orm:relational-naming-settings>
+      <orm:source-strategy>Property</orm:source-strategy>
+      <orm:remove-camel-case>False</orm:remove-camel-case>
+    </orm:relational-naming-settings>
+  </orm:orm>
+  <ModelSettings xmlns="">
+    <AppConfigConnectionPropertyName>Connection</AppConfigConnectionPropertyName>
+    <AppConfigConnectionString>Server=localhost;Port=3306;Database=musicfactory;Uid=root;Pwd=;</AppConfigConnectionString>
+    <NamingSettings>
+      <ClassRules>
+        <CaseMode>PascalCase</CaseMode>
+        <PluralizationMode>Singularize</PluralizationMode>
+      </ClassRules>
+      <FieldRules>
+        <AddPrefix>_</AddPrefix>
+        <CaseMode>CamelCase</CaseMode>
+      </FieldRules>
+      <PropertyRules>
+        <CaseMode>PascalCase</CaseMode>
+      </PropertyRules>
+      <NavigationPropertyRules />
+    </NamingSettings>
+    <CodeGenerationSettings>
+      <MappingDefinitionType>Xml</MappingDefinitionType>
+    </CodeGenerationSettings>
+    <SchemaUpdateSettings />
+    <BackendConfigurationSettings>
+      <BackendConfiguration>
+        <Backend>MySql</Backend>
+        <ProviderName>MySql.Data.MySqlClient</ProviderName>
+      </BackendConfiguration>
+    </BackendConfigurationSettings>
+  </ModelSettings>
+  <Types>
+    <DomainClass Id="bbd4bdc0-c07b-4659-bcb0-43a5a1c8bd34" name="Salesbycountry" namespace="MusicFactory.DataAccessModel_Sales" showPropertiesCompartment="true" concurrencyMode="Changed" showNavigationCompartment="true" showImplementationCompartment="true">
+      <Property Id="1be9aa3c-2ebe-4cad-94f9-6b50c18362a5" name="CountryName" label="CountryName : String" kind="Persistent" identity="true" fieldName="_countryName" />
+      <Property Id="e5c4f936-7421-4e1a-9c69-d6915f785c17" name="Sales" type="Int64" label="Sales : Int64" kind="Persistent" fieldName="_sales" />
+      <Property Id="62b3afa6-a156-4a8b-9b91-0b8b584fe43a" name="Year" type="Int32" label="Year : Int32" kind="Persistent" fieldName="_year" />
+    </DomainClass>
+  </Types>
+  <domainContext>
+    <domainModelHasDomainContext Id="c87ac438-f24a-4b49-bb93-6f51aba5911f">
+      <domainContainer name="EntitiesModel" namespace="MusicFactory.DataAccessModel_Sales" showPropertiesCompartment="true">
+        <entitySetProperty name="Salesbycountries" namespace="MusicFactory.DataAccessModel_Sales" type="Salesbycountry" label="Salesbycountries : IQueryable&lt;MusicFactory.DataAccessModel_Sales.Salesbycountry&gt;" />
+      </domainContainer>
+    </domainModelHasDomainContext>
+  </domainContext>
+</DomainModel>

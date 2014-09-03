@@ -22,11 +22,11 @@
 
             using (libraryDatabase)
             {
-                SQLiteCommand createTableCommand = new SQLiteCommand("CREATE TABLE `ExpensesByCountry` (`ExpensesID` INTEGER PRIMARY KEY AUTOINCREMENT,`CountryName` VARCHAR(100) NOT NULL,`Expenses` INTEGER NOT NULL, `Year` INTEGER NOT NULL)", libraryDatabase);
+                SQLiteCommand createTableCommand = new SQLiteCommand("CREATE TABLE `ExpensesByCountry` (`ExpensesID` INTEGER PRIMARY KEY AUTOINCREMENT,`CountryID` INTEGER NOT NULL,`Expenses` INTEGER NOT NULL)", libraryDatabase);
 
                 createTableCommand.ExecuteNonQuery();
 
-                SQLiteCommand fillTableWithDataCommand = new SQLiteCommand("INSERT INTO `ExpensesByCountry` VALUES (1, 'Bulgaria', 500, 2014), (2, 'France', 800, 2014), (3, 'Germany', 900, 2014), (4, 'USA', 1000, 2014), (5, 'UK', 300, 2014);", libraryDatabase);
+                SQLiteCommand fillTableWithDataCommand = new SQLiteCommand("INSERT INTO `ExpensesByCountry` VALUES (1, 1, 500), (2, 2, 800), (3, 3, 900), (4, 4, 1000), (5, 5, 300);", libraryDatabase);
 
                 fillTableWithDataCommand.ExecuteNonQuery();
             }
