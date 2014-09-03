@@ -9,6 +9,7 @@
     using MusicFactory.Models;
     using System.Collections.Generic;
     using System.Data;
+    using MusicFactory.Data;
     using System.Data.Entity;
 
     public class ExcelToSqlServerTransferer
