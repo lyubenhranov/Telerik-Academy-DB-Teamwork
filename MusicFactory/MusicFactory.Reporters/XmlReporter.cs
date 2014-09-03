@@ -31,7 +31,7 @@ namespace MusicFactory.Reporters
 
                 dataAdapter.Fill(salesByArtistDataTable);
 
-                salesByArtistDataTable.WriteXml(@"..\..\..\Reports\report.xml");
+                salesByArtistDataTable.WriteXml(@"..\..\..\..\Reports\report.xml");
 
                 Console.WriteLine("XML Report has been successfully generated");
             }

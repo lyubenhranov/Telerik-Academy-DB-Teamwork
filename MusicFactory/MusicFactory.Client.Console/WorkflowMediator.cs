@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using MusicFactory.Reporters;
+    using MusicFactory.Models.SQLite;
     using System.Text;
     using System.Threading.Tasks;
 
@@ -33,7 +34,7 @@
         public void GenerateXmlReportForYear(int year)
         {
             var xmlReporter = new XmlReporter();
-            //xmlReporter.GenerateReport(year);
+            xmlReporter.GenerateReport(year);
         }
 
         public void CreateMySqlDatabase()
@@ -53,7 +54,10 @@
 
         public void SaveReportsFromSqliteAndMySqlToExcel()
         {
+            var sqliteRepository = new SQLiteRepository();
 
+            sqliteRepository.CreateDatabase();
+            sqliteRepository.FillDatabaseWithData();
         }
 
         public void HandleUserInput()

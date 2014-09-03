@@ -14,7 +14,7 @@
         {
             using (Document doc = new Document())
             {
-                PdfWriter writer = PdfWriter.GetInstance(doc, new FileStream(@"..\..\..\Reports\report.pdf", FileMode.Create));
+                PdfWriter writer = PdfWriter.GetInstance(doc, new FileStream(@"..\..\..\..\Reports\report.pdf", FileMode.Create));
 
                 doc.Open();
 
