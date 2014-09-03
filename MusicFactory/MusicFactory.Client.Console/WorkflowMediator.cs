@@ -56,7 +56,7 @@
         {
             var sqliteRepository = new SQLiteRepository();
 
-            sqliteRepository.CreateDatabase();
+            sqliteRepository.CreateDatabase("additionalProductInfo");
             sqliteRepository.FillDatabaseWithData();
         }
 

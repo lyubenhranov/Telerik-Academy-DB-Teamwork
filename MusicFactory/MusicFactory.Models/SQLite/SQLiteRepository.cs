@@ -9,9 +9,9 @@
 
     public class SQLiteRepository
     {
-        public void CreateDatabase()
+        public void CreateDatabase(string databaseName)
         {
-            SQLiteConnection.CreateFile(@"..\..\..\..\Databases\additionalProductInfo.sqlite");
+            SQLiteConnection.CreateFile(System.Configuration.ConfigurationManager.AppSettings["DatabaseFolderPath"] + databaseName + ".sqlite");
         }
 
         public void FillDatabaseWithData()

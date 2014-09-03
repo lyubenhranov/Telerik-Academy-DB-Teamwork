@@ -1,15 +1,2 @@
 <?xml version="1.0" standalone="yes"?>
-<DocumentElement>
-  <Sales_x0020_By_x0020_Artist>
-    <Name>Breaking Benjamin</Name>
-    <Sales>420.0000</Sales>
-  </Sales_x0020_By_x0020_Artist>
-  <Sales_x0020_By_x0020_Artist>
-    <Name>Evanescence</Name>
-    <Sales>300.0000</Sales>
-  </Sales_x0020_By_x0020_Artist>
-  <Sales_x0020_By_x0020_Artist>
-    <Name>Seether</Name>
-    <Sales>360.0000</Sales>
-  </Sales_x0020_By_x0020_Artist>
-</DocumentElement>
+<DocumentElement />
