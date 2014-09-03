@@ -5,6 +5,7 @@
     using System.Linq;
     using MusicFactory.Reporters;
     using MusicFactory.Models.SQLite;
+    using MusicFactory.Models.MySQL;
     using MySql.Data.MySqlClient;
     using System.Text;
     using System.Threading.Tasks;
@@ -75,6 +76,13 @@
 
             sqliteRepository.CreateDatabase("additionalProductInfo");
             sqliteRepository.FillDatabaseWithData();
+
+            // Get the data from MySQL
+            var mysqlRepository = new MySqlRepository();
+
+            // Get the data from SQLite
+
+            // Fill the data in Excel 2007
         }
 
         public void HandleUserInput()

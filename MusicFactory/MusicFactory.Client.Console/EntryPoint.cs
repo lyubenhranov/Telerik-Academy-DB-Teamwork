@@ -8,13 +8,13 @@
 
             // SASHO   
             // Fill in MongoDB database with data
-            flowHandler.FillMongoDbWithData();
+            // flowHandler.FillMongoDbWithData();
 
             // Insert the data to SQL Server
-            flowHandler.TransferDataFromMongoToSqlServer();
+            // flowHandler.TransferDataFromMongoToSqlServer();
 
             // Read the data from Excel and transfer it to the SQL Server
-            flowHandler.TransferDataFromExcelToSqlServer();
+            // flowHandler.TransferDataFromExcelToSqlServer();
 
             // LYUBO
             // Generate PDF and XML reports from SQL Server
