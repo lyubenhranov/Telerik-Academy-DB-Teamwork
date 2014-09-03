@@ -133,14 +133,6 @@
                 SqlServerContext.Albums.Add(parsedAlbum);
                 this.SqlServerContext.SaveChanges();
             }
-
-            //TODO Remove!!!
-            var country = new Country() { Name = "bulgaria" };
-            var address = new Address() { AddressText = "addrszz", Country = country };
-            var store = new Store() { Name = "Zmeyovo", Address = address };
-
-            this.SqlServerContext.Stores.Add(store);
-            this.SqlServerContext.SaveChanges();
         }
     }
 }
