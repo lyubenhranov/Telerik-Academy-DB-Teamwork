@@ -40,7 +40,29 @@
 
             // LYUBO
             // Console interface for reports
+<<<<<<< HEAD
             flowHandler.HandleUserInput();
+=======
+
+            //var musicFactoryContext = new MusicFactoryDbContext();
+            //var store = new Store();
+            //var order = new Order() { OrderDate = DateTime.Now.AddDays(-2), Price = 5, Store = store};
+            //var order2 = new Order() { OrderDate = DateTime.Now.AddDays(2), Price = 5 };
+            //var order3 = new Order() { OrderDate = DateTime.Now.AddDays(-2), Price = 2 };
+            //var order4 = new Order() { OrderDate = DateTime.Now.AddDays(-2), Price = 1 };
+            //var orders = new List<Order> { order, order2, order3, order4 };
+
+            //musicFactoryContext.Orders.Add(order);
+            //musicFactoryContext.SaveChanges();
+
+            //var pers = new ExcelPersister();
+            //pers.ExploreDirectory();
+
+            //var pdfReporter = new PdfReporter();
+            //pdfReporter.GenerateReport();
+            //var xmlReporter = new XmlReporter();
+            //xmlReporter.GenerateReport();
+>>>>>>> origin/master
         }
     }
 }

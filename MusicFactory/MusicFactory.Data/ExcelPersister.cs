@@ -57,16 +57,24 @@
                 var command = new OleDbDataAdapter("SELECT * FROM [Sales$]", connection);
                 var table = new DataTable();
                 command.Fill(table);
-                foreach (DataRow row in table.Rows)
+
+                Console.WriteLine(table.Rows[1].ItemArray[0]);
+                for (int i = 2; i < table.Rows.Count; i++)
                 {
-                    var albumId = (Guid)row["AlbumId"];
-                    var quantity = (int)row["Quantity"];
-                    var price = (decimal)row["Price"];
-                    var total = (decimal)row["Total"];
+
+                }
+
+                //foreach (DataRow row in table.Rows)
+                //{
+
+                //    var albumId = (Guid)row["AlbumId"];
+                //    var quantity = (int)row["Quantity"];
+                //    var price = (decimal)row["Price"];
+                //    var total = (decimal)row["Total"];
 
                     
-                    var order = new Order() { AlbumId = albumId, Price = price, Quantity = quantity, TotalSum = total, OrderDate = date,  };
-                }
+                //    var order = new Order() { AlbumId = albumId, Price = price, Quantity = quantity, TotalSum = total, OrderDate = date,  };
+                //}
             }
             Console.WriteLine(locationName);
 
