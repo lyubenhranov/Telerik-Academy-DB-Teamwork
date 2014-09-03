@@ -68,11 +68,6 @@
                     {
                         string[] report = File.ReadAllLines(path);
 
-                        foreach (var item in report)
-                        {
-                            Console.WriteLine(item);
-                        }
-
                         var parsedReport = JsonConvert.DeserializeObject<Salesbycountry>(report[0]);
 
                         Salesbycountry salesTable = new Salesbycountry();
@@ -83,6 +78,8 @@
                         dbContext.Add(salesTable);
 
                         dbContext.SaveChanges();
+
+                        Console.WriteLine("Data has been loaded to MySQL successfully");
                     }
                 }
             }
@@ -123,6 +120,8 @@
                         File.WriteAllText("..\\..\\..\\..\\Reports\\JSON\\" + data.countryId + ".json", serializedSalesObject);
                     }
                 }
+
+                Console.WriteLine("JSON files have been generated successfully");
             }
         }
 
