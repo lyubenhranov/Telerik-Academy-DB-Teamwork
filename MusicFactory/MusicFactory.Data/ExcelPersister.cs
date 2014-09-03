@@ -9,25 +9,12 @@
     using MusicFactory.Models;
     using System.Collections.Generic;
     using System.Data;
-    using MusicFactory.Data;
-    using System.Data.Entity;
 
-    public class ExcelToSqlServerTransferer
+    public class ExcelPersister
     {
         public const string ReportFileLocation = "../../";
         public const string ReportFileName = "Sales reports.zip";
         public const string TempFileLocation = "temp/";
-
-        private MusicFactoryDbContext DbContext { get; set; }
-
-        public ExcelToSqlServerTransferer() : this(new MusicFactoryDbContext())
-        {
-        }
-
-        public ExcelToSqlServerTransferer(MusicFactoryDbContext dbContext)
-        {
-            this.DbContext = dbContext;
-        }
 
         public void ExtractFilesFromZip()
         {
@@ -48,25 +35,20 @@
 
                 foreach (var subFolder in Directory.GetFiles(folder))
                 {
-                    var orders = ParseFile(subFolder, folderDate);
-
-                    foreach (var ord in orders)
-                    {
-                        this.DbContext.Orders.Add(ord);
-                    }
-                    //this.DbContext.SaveChanges();
+                    //Console.WriteLine(subFolder);
+                    ParseFile(subFolder, folderDate);
                 }
             }
         }
 
         public ICollection<Order> ParseFile(string path, DateTime date)
         {
+
+
             var orders = new List<Order>();
             var fileName = path.Substring(path.LastIndexOf('\\') + 1);
-            var storeName = fileName.Substring(0, fileName.IndexOf("Sales") - 1);
-            storeName = storeName.Replace('-', ' ');
-            
-            Store store = this.DbContext.Stores.FirstOrDefault(st => st.Name == storeName);
+            var locationName = fileName.Substring(0, fileName.IndexOf("Sales") - 1);
+            locationName = locationName.Replace('-', ' ');
 
             var connection = new OleDbConnection("provider=Microsoft.Jet.OLEDB.4.0;Data Source='" + path + "';Extended Properties=Excel 8.0;");
             connection.Open();
@@ -76,20 +58,28 @@
                 var table = new DataTable();
                 command.Fill(table);
 
-                var rows = table.Rows;
-                for (int i = 1; i < rows.Count; i++)
+                Console.WriteLine(table.Rows[1].ItemArray[0]);
+                for (int i = 2; i < table.Rows.Count; i++)
                 {
-                    var albumId = Guid.Parse((string)rows[i][0]);
-                    var quantity = int.Parse(rows[i][1].ToString());
-                    var price = decimal.Parse(rows[i][2].ToString());
-                    var total = decimal.Parse(rows[i][3].ToString());
-                  
-                    var order = new Order() { AlbumId = albumId, Price = price, Quantity = quantity, TotalSum = total, OrderDate = date, Store = store };
-                    orders.Add(order);
+
                 }
+
+                //foreach (DataRow row in table.Rows)
+                //{
+
+                //    var albumId = (Guid)row["AlbumId"];
+                //    var quantity = (int)row["Quantity"];
+                //    var price = (decimal)row["Price"];
+                //    var total = (decimal)row["Total"];
+
+                    
+                //    var order = new Order() { AlbumId = albumId, Price = price, Quantity = quantity, TotalSum = total, OrderDate = date,  };
+                //}
             }
+            Console.WriteLine(locationName);
 
             return orders;
         }
+        
     }
 }
