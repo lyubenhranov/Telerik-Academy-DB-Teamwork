@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<stores>
+    <store>
+        <Owner>Valentino Maraless</Owner>
+		<Name>Valentino Store</Name>
+		<AddressText>39 Via Torino</AddressText>
+		<CountryName>Italy</CountryName>
+    </store>
+	<store>
+        <Owner>Telerik Akademikov</Owner>
+		<Name>Pri Pesho</Name>
+		<AddressText>32 blvd. Al. Malinov</AddressText>
+		<CountryName>Bulgaria</CountryName>
+    </store>
+	<store>
+        <Owner>Rednik Opalchenski</Owner>
+		<Name>Pri Strandjata</Name>
+		<AddressText>6 Shipka Str</AddressText>
+		<CountryName>France</CountryName>
+    </store>
+	<store>
+        <Owner>John Doe</Owner>
+		<Name>Lost</Name>
+		<AddressText>51 Washington Str.</AddressText>
+		<CountryName>USA</CountryName>
+    </store>
+	<store>
+        <Owner>Mr. Bean</Owner>
+		<Name>Pipi House</Name>
+		<AddressText>41 Vila Vilekula Str.</AddressText>
+		<CountryName>UK</CountryName>
+    </store>
+</stores>

@@ -1,5 +1,6 @@
 ﻿namespace MusicFactory.Engine
 {
+    using MusicFactory.Data;
     using MusicFactory.Data.MongoDb;
     using MusicFactory.DataAccessModel_Sales;
     using MusicFactory.Models;
@@ -126,7 +127,12 @@
 
         public void TransferXmlDataToMongoAndSqlServer()
         {
-
+            var musicFactoryContext = new MusicFactoryDbContext();
+            using (musicFactoryContext)
+            {
+                var xmlDataImporter = new XmlDataImporter(musicFactoryContext);
+                xmlDataImporter.ImportDataFromXML();
+            }
         }
 
         public void SaveReportsFromSqliteAndMySqlToExcel()
