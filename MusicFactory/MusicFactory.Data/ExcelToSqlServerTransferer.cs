@@ -14,8 +14,8 @@
 
     public class ExcelToSqlServerTransferer
     {
-        public const string ReportFileLocation = "..\\..\\..\\..\\Reports\\";
-        public const string ReportFileName = "Input Sales Reports.zip";
+        public const string ReportFileLocation = "..\\..\\..\\..\\Inputs\\";
+        public const string ReportFileName = "Sales Reports.zip";
         public const string TempFileLocation = "temp/";
 
         private MusicFactoryDbContext DbContext { get; set; }
