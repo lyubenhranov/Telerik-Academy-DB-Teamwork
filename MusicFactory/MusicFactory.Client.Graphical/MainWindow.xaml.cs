@@ -49,12 +49,12 @@ namespace MusicFactory.Client.Graphical
             this.mediator.TransferDataFromMongoToSqlServer();
             this.mediator.TransferXmlDataToMongoAndSqlServer();
             this.mediator.TransferDataFromExcelToSqlServer();
-            this.mediator.CreateMySqlDatabase();
+            this.mediator.TransferReportToMySql();
         }
 
         private void GenerateJsonButtonClick(object sender, RoutedEventArgs e)
         {
-            this.mediator.TransferReportsToMySqlAndJson();
+            this.mediator.TransferReportsJson();
         }
 
         private void GenerateExcelReportButtonClick(object sender, RoutedEventArgs e)

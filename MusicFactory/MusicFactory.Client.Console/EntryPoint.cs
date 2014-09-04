@@ -20,16 +20,16 @@
             flowHandler.TransferDataFromExcelToSqlServer();
             Console.WriteLine("Excel orders have been transferred to the SQL Server");
 
-            flowHandler.GeneratePdfReportForYear(2014, "2014-Artists-Sales-Report");
+            //flowHandler.GeneratePdfReportForYear(2013, "2013-Artists-Sales-Report");
             Console.WriteLine("PDF report has been successfully generated");
 
-            flowHandler.GenerateXmlReportForYear(2014, "2014-Artists-Sales-Report");
+            //flowHandler.GenerateXmlReportForYear(2013, "2013-Artists-Sales-Report");
             Console.WriteLine("XML report has been successfully generated");
 
-            flowHandler.CreateMySqlDatabase();
-            Console.WriteLine("SQLite database has been created and filled with data");
+            flowHandler.TransferReportsJson();
+            Console.WriteLine("Sales reports from SQL Server have been transferred to JSON files");
 
-            flowHandler.TransferReportsToMySqlAndJson();
+            flowHandler.TransferReportToMySql();
             Console.WriteLine("Sales reports from SQL Server have been transferred to MySQL and JSON files");
             
             flowHandler.SaveReportsFromSqliteAndMySqlToExcel();

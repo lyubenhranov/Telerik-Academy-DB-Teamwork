@@ -67,7 +67,7 @@
             var storeName = fileName.Substring(0, fileName.IndexOf("Sales") - 1);
             storeName = storeName.Replace('-', ' ');
 
-            Store store = this.DbContext.Stores.FirstOrDefault();
+            Store store = this.DbContext.Stores.FirstOrDefault(x => x.Name == storeName);
 
             var connection = new OleDbConnection("provider=Microsoft.Jet.OLEDB.4.0;Data Source='" + path + "';Extended Properties=Excel 8.0;");
             connection.Open();
@@ -89,6 +89,8 @@
                     orders.Add(order);
                 }
             }
+
+            File.Delete(path);
 
             return orders;
         }

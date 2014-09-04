@@ -14,6 +14,7 @@
     using System.IO;
     using System.Linq;
     using System.Data.OleDb;
+    using System.Data.SqlClient;
 
     public class WorkflowMediator
     {
@@ -48,7 +49,7 @@
             xmlReporter.GenerateReport(year, fileName);
         }
 
-        public void CreateMySqlDatabase()
+        public void TransferReportToMySql()
         {
             string connectionString = "Server=localhost;Port=3306;Database=;Uid=root;Pwd=;";
 
@@ -87,40 +88,42 @@
             }
         }
 
-        public void TransferReportsToMySqlAndJson()
+        public void TransferReportsJson()
         {
-            MusicFactoryDbContext context = new MusicFactoryDbContext();
+            string connectionString = "Server=.; " +
+            "Database=MusicFactory; Integrated Security=true";
 
-            using (context)
+            SqlConnection musicFactoryConnection = new SqlConnection(connectionString);
+
+            musicFactoryConnection.Open();
+
+            using (musicFactoryConnection)
             {
-                var allData = from order in context.Orders
-                              join store in context.Stores on order.StoreId equals store.StoreId
-                              join address in context.Addresses on store.AddressId equals address.AddressId
-                              join country in context.Countries on address.CountryId equals country.CountryId
-                              select new
-                              {
-                                  countryName = country.Name,
-                                  countryId = country.CountryId,
-                                  orderTotalSales = order.TotalSum,
-                                  orderDate = order.OrderDate
-                              };
+                string getAllSalesCommand = "SELECT countries.Name AS CountryName, SUM(orders.TotalSum) AS Sales, YEAR(orders.OrderDate) AS Year FROM Orders AS orders 	JOIN Stores AS stores ON stores.StoreId = orders.StoreID 	JOIN Addresses AS addresses ON addresses.AddressId = stores.AddressId 	JOIN Countries AS countries ON countries.CountryId = addresses.CountryId GROUP BY countries.Name, YEAR(orders.OrderDate)";
 
-                var groupedData = allData.GroupBy(a => a.countryName);
+                SqlCommand getSalesCommand = new SqlCommand(getAllSalesCommand, musicFactoryConnection);
 
-                foreach (var eachGroup in groupedData)
+                string currentCountryName = "";
+                decimal currentSales;
+                int currentYear;
+
+                SqlDataReader salesReader = getSalesCommand.ExecuteReader();
+
+                while (salesReader.Read())
                 {
-                    foreach (var data in eachGroup)
-                    {
-                        var salesObject = new
-                        {
-                            countryName = data.countryName,
-                            sales = data.orderTotalSales,
-                            year = data.orderDate.Year
-                        };
+                    currentCountryName = (string)salesReader["CountryName"];
+                    currentSales = (decimal)salesReader["Sales"];
+                    currentYear = (int)salesReader["Year"];
 
-                        var serializedSalesObject = JsonConvert.SerializeObject(salesObject);
-                        File.WriteAllText("..\\..\\..\\..\\Reports\\JSON\\" + data.countryId + ".json", serializedSalesObject);
-                    }
+                    var salesObject = new
+                    {
+                        countryName = currentCountryName,
+                        sales = currentSales,
+                        year = currentYear
+                    };
+
+                    var serializedSalesObject = JsonConvert.SerializeObject(salesObject);
+                    File.WriteAllText("..\\..\\..\\..\\Reports\\JSON\\" + currentCountryName + ".json", serializedSalesObject);
                 }
             }
         }
@@ -141,6 +144,8 @@
 
             sqliteRepository.CreateDatabase("additionalProductInfo");
             sqliteRepository.FillDatabaseWithData();
+
+            Console.WriteLine("SQLite database has been created and filled with data");
 
             var sqlLiteExpenses = sqliteRepository.GetExpensesData();
 

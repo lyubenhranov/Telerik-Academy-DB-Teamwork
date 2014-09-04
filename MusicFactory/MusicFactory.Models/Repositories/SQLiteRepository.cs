@@ -27,7 +27,7 @@
 
                 createTableCommand.ExecuteNonQuery();
 
-                SQLiteCommand fillTableWithDataCommand = new SQLiteCommand("INSERT INTO `ExpensesByCountry` VALUES (1, 'Italy', 500, 2014), (2, 'France', 800, 2014), (3, 'UK', 900, 2014), (4, 'USA', 1000, 2014), (5, 'Bulgaria', 300, 2014);", expensesDatabase);
+                SQLiteCommand fillTableWithDataCommand = new SQLiteCommand("INSERT INTO `ExpensesByCountry` VALUES (1, 'Italy', 500, 2013), (2, 'France', 800, 2013), (3, 'UK', 900, 2013), (4, 'USA', 1000, 2013), (5, 'Bulgaria', 300, 2013), (6, 'Italy', 500, 2014), (7, 'France', 800, 2014), (8, 'UK', 900, 2014), (9, 'USA', 1000, 2014), (10, 'Bulgaria', 300, 2014);", expensesDatabase);
 
                 fillTableWithDataCommand.ExecuteNonQuery();
             }
