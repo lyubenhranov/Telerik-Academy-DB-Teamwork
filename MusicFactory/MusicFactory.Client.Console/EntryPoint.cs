@@ -37,7 +37,9 @@
             // SISI
             // Get the reports from MySQL AND Get the additional data from SQLite AND Save the report to Excel 2007
 
-            flowHandler.SaveReportsFromSqliteAndMySqlToExcel();
+            // DIVIDED THE METHOD INTO 2 METHODS BECAUSE WE HAVE TO SEEK FOR SIMPLICITY
+            flowHandler.SaveReportsFromSqliteToExcel();
+            flowHandler.SaveReportsFromMySqlToExcel();
 
             // LYUBO
             // Console interface for reports

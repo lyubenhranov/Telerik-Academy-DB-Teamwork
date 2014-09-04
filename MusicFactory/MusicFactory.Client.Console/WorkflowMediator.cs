@@ -4,6 +4,7 @@
     using MusicFactory.Data.MongoDb;
     using MusicFactory.DataAccessModel_Sales;
     using MusicFactory.Models;
+    using MusicFactory.Models.Repositories;
     using MusicFactory.Models.SQLite;
     using MusicFactory.Reporters;
     using MySql.Data.MySqlClient;
@@ -135,12 +136,19 @@
             }
         }
 
-        public void SaveReportsFromSqliteAndMySqlToExcel()
+        public void SaveReportsFromSqliteToExcel()
         {
             var sqliteRepository = new SQLiteRepository();
 
             sqliteRepository.CreateDatabase("additionalProductInfo");
             sqliteRepository.FillDatabaseWithData();
+        }
+
+        public void SaveReportsFromMySqlToExcel()
+        {
+            var mySqlRepository = new MySqlRepository();
+
+            mySqlRepository.GenerateExcelReports();
         }
 
         public void HandleUserInput()

@@ -2,10 +2,14 @@
 <DocumentElement>
   <Sales_x0020_By_x0020_Artist>
     <Name>Eminem</Name>
-    <Sales>19.95</Sales>
+    <Sales>187.87</Sales>
   </Sales_x0020_By_x0020_Artist>
   <Sales_x0020_By_x0020_Artist>
     <Name>Rihanna</Name>
-    <Sales>31.20</Sales>
+    <Sales>145.20</Sales>
+  </Sales_x0020_By_x0020_Artist>
+  <Sales_x0020_By_x0020_Artist>
+    <Name>The Beatles</Name>
+    <Sales>150.31</Sales>
   </Sales_x0020_By_x0020_Artist>
 </DocumentElement>
