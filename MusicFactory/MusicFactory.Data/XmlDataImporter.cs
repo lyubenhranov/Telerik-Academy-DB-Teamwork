@@ -16,7 +16,7 @@
 
         public void ImportDataFromXML()
         {
-            string storesPath = "../../stores.xml";
+            string storesPath = "..\\..\\..\\..\\Inputs\\stores.xml";
 
             try
             {
