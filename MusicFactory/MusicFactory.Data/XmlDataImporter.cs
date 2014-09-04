@@ -4,14 +4,18 @@
     using System.Linq;
 
     using XmlDataLoader;
+    using MongoDB.Driver;
     using MusicFactory.Models;
 
     public class XmlDataImporter
     {
         private MusicFactoryDbContext musicFactoryContext;
-        public XmlDataImporter(MusicFactoryDbContext musicFactoryContext)
+        private MongoDatabase mongoDatabase;
+
+        public XmlDataImporter(MusicFactoryDbContext musicFactoryContext, MongoDatabase mongoDbContext)
         {
             this.musicFactoryContext = musicFactoryContext;
+            this.mongoDatabase = mongoDbContext;
         }
 
         public void ImportDataFromXML()
@@ -25,13 +29,20 @@
 
                 using (musicFactoryContext)
                 {
+                    this.mongoDatabase.DropCollection("stores");
+                    this.mongoDatabase.CreateCollection("stores");
+                    var mongoStores = this.mongoDatabase.GetCollection("stores");
+
                     foreach (var store in stores)
                     {
                         var mergedStore = this.MergeExistingStores(store);
 
                         this.musicFactoryContext.Stores.Add(mergedStore);
-                    }
 
+                        mongoStores.Insert(mergedStore);
+                    } 
+
+                    Console.WriteLine("Data from the stores.xml has been loaded successfully into mongoDb database.");
                     this.musicFactoryContext.SaveChanges();
                 }
             }

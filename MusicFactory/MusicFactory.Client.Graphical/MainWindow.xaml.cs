@@ -26,6 +26,8 @@ namespace MusicFactory.Client.Graphical
     {
         private WorkflowMediator mediator { get; set; }
 
+        private const string DefaultReportsFolder = "..\\..\\..\\..\\Reports\\";
+
         public MainWindow() : this(new WorkflowMediator())
         {
         }
@@ -39,9 +41,8 @@ namespace MusicFactory.Client.Graphical
         
         private void GeneratePdf_Click(object sender, RoutedEventArgs e)
         {
-            this.mediator.GeneratePdfReportForYear(2013, "2013-Artists-Sales-Report");
-            this.mediator.GenerateXmlReportForYear(2013, "2013-Artists-Sales-Report");
-
+            this.mediator.GeneratePdfReportForYear(2014, "2014-Artists-Sales-Report");
+            System.Diagnostics.Process.Start(DefaultReportsFolder + "2014-Artists-Sales-Report.pdf");
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -56,16 +57,19 @@ namespace MusicFactory.Client.Graphical
         private void GenerateJsonButtonClick(object sender, RoutedEventArgs e)
         {
             this.mediator.TransferReportsJson();
+            System.Diagnostics.Process.Start(DefaultReportsFolder + "JSON\\");
         }
 
         private void GenerateExcelReportButtonClick(object sender, RoutedEventArgs e)
         {
             this.mediator.SaveReportsFromSqliteAndMySqlToExcel();
+            System.Diagnostics.Process.Start(DefaultReportsFolder + "Profit and Loss Report.xlsx");
         }
 
         private void GenerateXmlReportClick(object sender, RoutedEventArgs e)
         {
             this.mediator.GenerateXmlReportForYear(2014, "2014-Artists-Sales-Report");
+            System.Diagnostics.Process.Start(DefaultReportsFolder + "2014-Artists-Sales-Report.xml");
         }
     }
 }

@@ -91,7 +91,7 @@
         public void TransferReportsJson()
         {
             string connectionString = "Server=.; " +
-            "Database=MusicFactory; Integrated Security=true";
+                                      "Database=MusicFactory; Integrated Security=true";
 
             SqlConnection musicFactoryConnection = new SqlConnection(connectionString);
 
@@ -127,13 +127,14 @@
                 }
             }
         }
-
+        
         public void TransferXmlDataToMongoAndSqlServer()
         {
             var musicFactoryContext = new MusicFactoryDbContext();
+            var mongoDbPersister = new MongoDbPersister();
             using (musicFactoryContext)
             {
-                var xmlDataImporter = new XmlDataImporter(musicFactoryContext);
+                var xmlDataImporter = new XmlDataImporter(musicFactoryContext, mongoDbPersister.Database);
                 xmlDataImporter.ImportDataFromXML();
             }
         }
@@ -175,7 +176,7 @@
                 decimal expenses;
                 int currentRow = 2;
 
-                foreach(var salesRecord in mySqlSales)
+                foreach (var salesRecord in mySqlSales)
                 {
                     countryName = salesRecord.CountryName;
                     year = salesRecord.Year;
@@ -189,7 +190,7 @@
                     profitAndLossSheet.Cell(currentRow, 5).Value = (sales - expenses).ToString();
 
                     currentRow++;
-                }           
+                }
 
                 excelPackage.Save();
             }

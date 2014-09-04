@@ -16,7 +16,7 @@
 
         private MongoServer Server { get; set; }
 
-        private MongoDatabase Database { get; set; }
+        public MongoDatabase Database { get; set; }
 
         public MongoDbPersister() : this(new MongoClient(MongoDbPersister.MongoDbConnectionString), MongoDbPersister.DefaultDatabaseName)
         {
