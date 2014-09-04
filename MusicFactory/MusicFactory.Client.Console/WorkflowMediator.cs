@@ -9,9 +9,11 @@
     using MusicFactory.Reporters;
     using MySql.Data.MySqlClient;
     using Newtonsoft.Json;
+    using OfficeOpenXml;
     using System;
     using System.IO;
     using System.Linq;
+    using System.Data.OleDb;
 
     public class WorkflowMediator
     {
@@ -30,6 +32,7 @@
         public void TransferDataFromExcelToSqlServer()
         {
             var excelPersister = new ExcelToSqlServerTransferer();
+            excelPersister.ExtractFilesFromZip();
             excelPersister.ExploreDirectory();
         }
 
@@ -79,8 +82,6 @@
                         dbContext.Add(salesTable);
 
                         dbContext.SaveChanges();
-
-                        Console.WriteLine("Data has been loaded to MySQL successfully");
                     }
                 }
             }
@@ -121,8 +122,6 @@
                         File.WriteAllText("..\\..\\..\\..\\Reports\\JSON\\" + data.countryId + ".json", serializedSalesObject);
                     }
                 }
-
-                Console.WriteLine("JSON files have been generated successfully");
             }
         }
 
@@ -136,29 +135,79 @@
             }
         }
 
-        public void SaveReportsFromSqliteToExcel()
+        public void SaveReportsFromSqliteAndMySqlToExcel()
         {
             var sqliteRepository = new SQLiteRepository();
 
             sqliteRepository.CreateDatabase("additionalProductInfo");
             sqliteRepository.FillDatabaseWithData();
-        }
 
-        public void SaveReportsFromMySqlToExcel()
-        {
+            var sqlLiteExpenses = sqliteRepository.GetExpensesData();
+
             var mySqlRepository = new MySqlRepository();
+            var mySqlSales = mySqlRepository.GetExpensesData();
 
-            mySqlRepository.GenerateExcelReports();
+            string fileName = "Profit and Loss Report";
+            
+            // Create the Excel file after deleting any old report with the same name
+            File.Delete("../../../../Reports/" + fileName + ".xlsx");
+
+            FileInfo expensesFile = new FileInfo("../../../../Reports/" + fileName + ".xlsx");
+
+            using (ExcelPackage excelPackage = new ExcelPackage(expensesFile))
+            {
+                ExcelWorksheet profitAndLossSheet = excelPackage.Workbook.Worksheets.Add("ProfitAndLoss");
+
+                profitAndLossSheet.Cell(1, 1).Value = "CountryName";
+                profitAndLossSheet.Cell(1, 2).Value = "Year";
+                profitAndLossSheet.Cell(1, 3).Value = "Sales";
+                profitAndLossSheet.Cell(1, 4).Value = "Expenses";
+                profitAndLossSheet.Cell(1, 5).Value = "Profit";
+
+                string countryName;
+                int year;
+                decimal sales;
+                decimal expenses;
+                int currentRow = 2;
+
+                foreach(var salesRecord in mySqlSales)
+                {
+                    countryName = salesRecord.CountryName;
+                    year = salesRecord.Year;
+                    sales = salesRecord.Sales;
+                    expenses = sqlLiteExpenses.Where(record => record.CountryName == countryName && record.Year == year).Select(record => record.Expenses).First();
+
+                    profitAndLossSheet.Cell(currentRow, 1).Value = countryName.ToString();
+                    profitAndLossSheet.Cell(currentRow, 2).Value = year.ToString();
+                    profitAndLossSheet.Cell(currentRow, 3).Value = sales.ToString();
+                    profitAndLossSheet.Cell(currentRow, 4).Value = expenses.ToString();
+                    profitAndLossSheet.Cell(currentRow, 5).Value = (sales - expenses).ToString();
+
+                    currentRow++;
+                }           
+
+                excelPackage.Save();
+            }
         }
 
-        public void HandleUserInput()
+        private void CreateNewExcelFile(string fileName)
         {
-            //string currentCommand = Console.ReadLine();
+            File.Delete("../../../../Reports/" + fileName + ".xlsx");
 
-            //while (currentCommand != "end")
-            //{
-            //    currentCommand = Console.ReadLine();
-            //}
+            FileInfo expensesFile = new FileInfo("../../../../Reports/" + fileName + ".xlsx");
+
+            using (ExcelPackage excelPackage = new ExcelPackage(expensesFile))
+            {
+                ExcelWorksheet profitAndLossSheet = excelPackage.Workbook.Worksheets.Add("ProfitAndLoss");
+
+                profitAndLossSheet.Cell(1, 1).Value = "CountryName";
+                profitAndLossSheet.Cell(1, 2).Value = "Year";
+                profitAndLossSheet.Cell(1, 3).Value = "Sales";
+                profitAndLossSheet.Cell(1, 4).Value = "Expenses";
+                profitAndLossSheet.Cell(1, 5).Value = "Profit";
+
+                excelPackage.Save();
+            }
         }
     }
 }

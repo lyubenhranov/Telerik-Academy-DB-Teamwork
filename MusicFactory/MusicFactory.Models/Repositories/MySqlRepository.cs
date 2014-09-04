@@ -5,44 +5,46 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.OleDb;
 using System.IO;
-
+using MySql.Data.MySqlClient;
 using OfficeOpenXml;
-//using MySql.Data.MySqlClient;
 
 namespace MusicFactory.Models.Repositories
 {
     public class MySqlRepository
     {
-        public void GenerateExcelReports()
+        public List<SalesByCountry> GetExpensesData()
         {
-            FileInfo newFile = new FileInfo("../../../../Reports/ExcelFromMySQL/Music Factory.xlsx");
-            using (ExcelPackage xlPackage = new ExcelPackage(newFile))
+            string connectionString = "Server=localhost;Port=3306;Database=musicfactory;Uid=root;Pwd=;";
+
+            MySqlConnection expensesDatabase = new MySqlConnection(connectionString);
+
+            MySqlDataReader salesReader;
+
+            expensesDatabase.Open();
+
+            List<SalesByCountry> salesByCountry = new List<SalesByCountry>();
+
+            using (expensesDatabase)
             {
-                ExcelWorksheet bugsWorkSheet = xlPackage.Workbook.Worksheets.Add("MusicFactory");
-                bugsWorkSheet.Cell(1, 1).Value = "CountryId";
-                bugsWorkSheet.Cell(1, 2).Value = "Sales";
-                bugsWorkSheet.Cell(1, 3).Value = "Year";
+                MySqlCommand selectBooksCommand = new MySqlCommand("SELECT * FROM salesbycountry", expensesDatabase);
 
-                xlPackage.Save();
+                salesReader = selectBooksCommand.ExecuteReader();
+
+                string countryName;
+                int year;
+                decimal sales;
+
+                while (salesReader.Read())
+                {
+                    countryName = (string)salesReader["CountryName"];
+                    year = (int)salesReader["Year"];
+                    sales = (decimal)salesReader["Sales"];
+
+                    salesByCountry.Add(new SalesByCountry { CountryName = countryName, Year = year, Sales = sales });
+                }
             }
+
+            return salesByCountry;
         }
-
-
-
-        /*  FILLING IN
-        private const string ExcelConnectionString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=..\\..\\..\\Excel Reports\\Report.xlsx;Extended Properties=Excel 12.0;";
-        private const string MySqlToExcelTransferSuccessMessage = "Data transferred from MySql in Excel successfully. Check out in solution folder Excel Reports.";
-        
-        public void WriteFromMySqlInExcel()
-        {
-            using (var context = new MusicFactoryDbContext())
-            {
-                var connection = new OleDbConnection(ExcelConnectionString);
-                connection.Open();
-
-                // TO FINISH LATER
-            }
-        }
-        */
     }
 }

@@ -16,8 +16,6 @@ namespace MusicFactory.Reporters
             SqlConnection musicFactoryDbConnection = this.GetDatabaseConnection();
 
             this.TransferDataToFile(year, fileName, musicFactoryDbConnection);
-
-            Console.WriteLine("XML report has been successfully generated");
         }
 
         protected override void TransferDataToFile(int year, string fileName, SqlConnection musicFactoryDbConnection)

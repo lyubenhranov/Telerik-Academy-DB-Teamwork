@@ -19,8 +19,6 @@
             SqlConnection musicFactoryDbConnection = this.GetDatabaseConnection();
 
             this.TransferDataToFile(year, fileName, musicFactoryDbConnection);
-
-            Console.WriteLine("PDF report has been successfully generated");
         }
 
         private Document CreatePdfDocument(int year, string fileName)

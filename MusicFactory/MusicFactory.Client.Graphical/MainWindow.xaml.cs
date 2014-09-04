@@ -59,8 +59,7 @@ namespace MusicFactory.Client.Graphical
 
         private void GenerateExcelReportButtonClick(object sender, RoutedEventArgs e)
         {
-            this.mediator.SaveReportsFromSqliteToExcel();
-            this.mediator.SaveReportsFromMySqlToExcel();
+            this.mediator.SaveReportsFromSqliteAndMySqlToExcel();
         }
 
         private void GenerateXmlReportClick(object sender, RoutedEventArgs e)

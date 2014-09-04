@@ -6,6 +6,7 @@
     using System.Text;
     using System.Threading.Tasks;
     using System.Data.SQLite;
+    using System.Data;
 
     public class SQLiteRepository
     {
@@ -16,20 +17,51 @@
 
         public void FillDatabaseWithData()
         {
-            SQLiteConnection libraryDatabase = new SQLiteConnection("Data Source=..\\..\\..\\..\\Databases\\additionalProductInfo.sqlite;Version=3;");
+            SQLiteConnection expensesDatabase = new SQLiteConnection("Data Source=..\\..\\..\\..\\Databases\\additionalProductInfo.sqlite;Version=3;");
 
-            libraryDatabase.Open();
+            expensesDatabase.Open();
 
-            using (libraryDatabase)
+            using (expensesDatabase)
             {
-                SQLiteCommand createTableCommand = new SQLiteCommand("CREATE TABLE `ExpensesByCountry` (`ExpensesID` INTEGER PRIMARY KEY AUTOINCREMENT,`CountryID` INTEGER NOT NULL,`Expenses` INTEGER NOT NULL)", libraryDatabase);
+                SQLiteCommand createTableCommand = new SQLiteCommand("CREATE TABLE `ExpensesByCountry` (`ExpensesID` INTEGER PRIMARY KEY AUTOINCREMENT,`CountryName` TEXT NOT NULL,`Expenses` INTEGER NOT NULL,`Year` INTEGER NOT NULL)", expensesDatabase);
 
                 createTableCommand.ExecuteNonQuery();
 
-                SQLiteCommand fillTableWithDataCommand = new SQLiteCommand("INSERT INTO `ExpensesByCountry` VALUES (1, 1, 500), (2, 2, 800), (3, 3, 900), (4, 4, 1000), (5, 5, 300);", libraryDatabase);
+                SQLiteCommand fillTableWithDataCommand = new SQLiteCommand("INSERT INTO `ExpensesByCountry` VALUES (1, 'Italy', 500, 2014), (2, 'France', 800, 2014), (3, 'UK', 900, 2014), (4, 'USA', 1000, 2014), (5, 'Bulgaria', 300, 2014);", expensesDatabase);
 
                 fillTableWithDataCommand.ExecuteNonQuery();
             }
+        }
+
+        public List<ExpenseByCountry> GetExpensesData()
+        {
+            SQLiteConnection expensesDatabase = new SQLiteConnection("Data Source=..\\..\\..\\..\\Databases\\additionalProductInfo.sqlite;Version=3;");
+
+            List<ExpenseByCountry> expenses = new List<ExpenseByCountry>();
+
+            expensesDatabase.Open();
+
+            using (expensesDatabase)
+            {
+                SQLiteCommand createTableCommand = new SQLiteCommand("SELECT * FROM ExpensesByCountry", expensesDatabase);
+                
+                var reader = createTableCommand.ExecuteReader();
+
+                string countryName;
+                decimal expense;
+                int year;
+
+                while (reader.Read())
+                {
+                    countryName = (string)reader["CountryName"];
+                    expense = (long)reader["Expenses"];
+                    year = (int)(long)reader["Year"];
+
+                    expenses.Add(new ExpenseByCountry { CountryName = countryName, Expenses = expense, Year = year });
+                }
+            }
+
+            return expenses;
         }
     }
 }

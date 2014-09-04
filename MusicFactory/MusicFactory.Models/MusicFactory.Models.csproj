@@ -43,7 +43,7 @@
       <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="ExcelPackage">
-      <HintPath>..\..\..\..\..\Programs\ExcelPackageBinary\ExcelPackage.dll</HintPath>
+      <HintPath>..\packages\ExcelPackageF.1.0.5\lib\net40\ExcelPackage.dll</HintPath>
     </Reference>
     <Reference Include="MongoDB.Bson">
       <HintPath>..\packages\mongocsharpdriver.1.9.2\lib\net35\MongoDB.Bson.dll</HintPath>
@@ -81,6 +81,7 @@
     <Compile Include="Album.cs" />
     <Compile Include="Artist.cs" />
     <Compile Include="Country.cs" />
+    <Compile Include="ExpenseByCountry.cs" />
     <Compile Include="Genre.cs" />
     <Compile Include="Lable.cs" />
     <Compile Include="MongoDbProjections\AlbumMongoDbProjection.cs" />
@@ -89,6 +90,7 @@
     <Compile Include="Order.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\MySqlRepository.cs" />
+    <Compile Include="SalesByCountry.cs" />
     <Compile Include="Song.cs" />
     <Compile Include="Repositories\SQLiteRepository.cs" />
     <Compile Include="Store.cs" />

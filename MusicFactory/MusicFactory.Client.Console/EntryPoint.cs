@@ -1,49 +1,39 @@
 ﻿namespace MusicFactory.Engine
 {
+    using System;
+
     class EntryPoint
     {
         static void Main()
         {
             var flowHandler = new WorkflowMediator();
 
-            // SASHO   
-            // Fill in MongoDB database with data
             flowHandler.FillMongoDbWithData();
+            Console.WriteLine("MongoDB database has been created and filled with data");
 
-            // Insert the data to SQL Server
             flowHandler.TransferDataFromMongoToSqlServer();
+            Console.WriteLine("MongoDB data has been transferred to the SQL Server");
 
-            //IVETO
-            // Read XML data AND Transfer the data to SQL Server and MongoDB
             flowHandler.TransferXmlDataToMongoAndSqlServer();
+            Console.WriteLine("XML data has been transferred to the SQL Server");
 
-            // Read the data from Excel and transfer it to the SQL Server
             flowHandler.TransferDataFromExcelToSqlServer();
+            Console.WriteLine("Excel orders have been transferred to the SQL Server");
 
-            // LYUBO
-            // Generate PDF and XML reports from SQL Server
             flowHandler.GeneratePdfReportForYear(2014, "2014-Artists-Sales-Report");
+            Console.WriteLine("PDF report has been successfully generated");
+
             flowHandler.GenerateXmlReportForYear(2014, "2014-Artists-Sales-Report");
+            Console.WriteLine("XML report has been successfully generated");
 
-            // IVCHO
-            // Create the MySQL database
             flowHandler.CreateMySqlDatabase();
+            Console.WriteLine("SQLite database has been created and filled with data");
 
-            // Generate reports from SQL Server AND Put the reports in JSON and MySQL
             flowHandler.TransferReportsToMySqlAndJson();
-
+            Console.WriteLine("Sales reports from SQL Server have been transferred to MySQL and JSON files");
             
-
-            // SISI
-            // Get the reports from MySQL AND Get the additional data from SQLite AND Save the report to Excel 2007
-
-            // DIVIDED THE METHOD INTO 2 METHODS BECAUSE WE HAVE TO SEEK FOR SIMPLICITY
-            flowHandler.SaveReportsFromSqliteToExcel();
-            flowHandler.SaveReportsFromMySqlToExcel();
-
-            // LYUBO
-            // Console interface for reports
-            flowHandler.HandleUserInput();
+            flowHandler.SaveReportsFromSqliteAndMySqlToExcel();
+            Console.WriteLine("Combined reports from MySQL and SQLite have been transferred to an Excel 2007 file");
         }
     }
 }
