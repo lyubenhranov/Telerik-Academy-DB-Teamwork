@@ -39,8 +39,9 @@ namespace MusicFactory.Client.Graphical
         
         private void GeneratePdf_Click(object sender, RoutedEventArgs e)
         {
-            this.mediator.GeneratePdfReportForYear(2014, "2014-Artists-Sales-Report");
-            //System.Diagnostics.Process.Start(System.Configuration.ConfigurationManager.AppSettings["ReportsFolderPath"] + "2014-Artists-Sales-Report.pdf");
+            this.mediator.GeneratePdfReportForYear(2013, "2013-Artists-Sales-Report");
+            this.mediator.GenerateXmlReportForYear(2013, "2013-Artists-Sales-Report");
+
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
